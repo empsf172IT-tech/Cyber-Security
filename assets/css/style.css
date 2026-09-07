@@ -1,0 +1,836 @@
+/* ==========================================================================
+   VANTA//SEC - Premium Cybersecurity Command Center Stylesheet
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg-primary: #05070a;
+  --bg-secondary: #090d14;
+  --bg-card: rgba(13, 19, 30, 0.75);
+  --bg-card-hover: rgba(18, 26, 42, 0.9);
+  --border-color: rgba(0, 240, 255, 0.12);
+  --border-color-hover: rgba(0, 240, 255, 0.4);
+  --text-main: #f0f6fc;
+  --text-muted: #8b9bb4;
+  --text-dim: #4d5b75;
+  --accent-cyan: #00f0ff;
+  --accent-cyan-glow: rgba(0, 240, 255, 0.25);
+  --accent-red: #ff2a5f;
+  --accent-red-glow: rgba(255, 42, 95, 0.25);
+  --accent-violet: #8b5cf6;
+  --accent-emerald: #10b981;
+  --accent-amber: #f59e0b;
+  --grid-line: rgba(0, 240, 255, 0.035);
+  --header-bg: rgba(5, 7, 10, 0.85);
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* Light Theme Variables */
+html[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-card-hover: #ffffff;
+  --border-color: #cbd5e1;
+  --border-color-hover: #0284c7;
+  --text-main: #0f172a;
+  --text-muted: #334155;
+  --text-dim: #475569;
+  --accent-cyan: #0284c7;
+  --accent-cyan-glow: rgba(2, 132, 199, 0.15);
+  --accent-red: #dc2626;
+  --accent-red-glow: rgba(220, 38, 38, 0.15);
+  --accent-violet: #6d28d9;
+  --accent-emerald: #059669;
+  --accent-amber: #d97706;
+  --grid-line: rgba(0, 0, 0, 0.05);
+  --header-bg: rgba(255, 255, 255, 0.95);
+  color-scheme: light;
+}
+
+/* Base resets & typography */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  position: relative;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  letter-spacing: -0.025em;
+  font-weight: 700;
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Technical grid background */
+.bg-tech-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+}
+
+.bg-radial-gradient {
+  background: radial-gradient(circle at 50% 20%, rgba(0, 240, 255, 0.07) 0%, transparent 60%);
+}
+
+html[data-theme="light"] .bg-radial-gradient {
+  background: radial-gradient(circle at 50% 20%, rgba(0, 152, 166, 0.07) 0%, transparent 60%);
+}
+
+/* Scanline effect */
+.scanlines::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+  background-size: 100% 4px;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.2;
+}
+
+html[data-theme="light"] .scanlines::after {
+  display: none;
+}
+
+/* Technical Panels & Glass Cards */
+.vanta-panel {
+  background: var(--bg-card);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  position: relative;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vanta-panel:hover {
+  border-color: var(--border-color-hover);
+  background: var(--bg-card-hover);
+  box-shadow: 0 10px 30px -10px var(--accent-cyan-glow);
+}
+
+/* Technical Corner Markings */
+.technical-corner {
+  position: relative;
+}
+
+.technical-corner::before,
+.technical-corner::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-color: var(--accent-cyan);
+  pointer-events: none;
+  transition: all 0.2s ease;
+}
+
+.technical-corner::before {
+  top: -1px;
+  left: -1px;
+  border-top: 2px solid var(--accent-cyan);
+  border-left: 2px solid var(--accent-cyan);
+}
+
+.technical-corner::after {
+  bottom: -1px;
+  right: -1px;
+  border-bottom: 2px solid var(--accent-cyan);
+  border-right: 2px solid var(--accent-cyan);
+}
+
+/* Buttons */
+.btn-cyan {
+  background: var(--accent-cyan);
+  color: #05070a;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid var(--accent-cyan);
+  box-shadow: 0 0 15px var(--accent-cyan-glow);
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+}
+
+.btn-cyan:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 25px rgba(0, 240, 255, 0.5);
+  filter: brightness(1.08);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--text-main);
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid var(--border-color);
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+}
+
+.btn-outline:hover {
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+  background: var(--accent-cyan-glow);
+  transform: translateY(-1px);
+}
+
+/* Pulsing Status Dot */
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+}
+
+.status-dot.active {
+  background-color: var(--accent-cyan);
+  box-shadow: 0 0 8px var(--accent-cyan);
+}
+
+.status-dot.active::after {
+  content: '';
+  position: absolute;
+  top: -3px; left: -3px; right: -3px; bottom: -3px;
+  border-radius: 50%;
+  border: 1px solid var(--accent-cyan);
+  animation: pulse-ring 1.8s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+.status-dot.alert {
+  background-color: var(--accent-red);
+  box-shadow: 0 0 8px var(--accent-red);
+}
+
+.status-dot.alert::after {
+  content: '';
+  position: absolute;
+  top: -3px; left: -3px; right: -3px; bottom: -3px;
+  border-radius: 50%;
+  border: 1px solid var(--accent-red);
+  animation: pulse-ring 1.8s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.8); opacity: 0.8; }
+  70% { transform: scale(2.2); opacity: 0; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* Radar Sweep Animation for canvas/decorations */
+@keyframes radar-sweep {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 240, 255, 0.2);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-cyan);
+}
+
+/* Technical Badges */
+.tech-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: 0.725rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(0, 240, 255, 0.08);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  color: var(--accent-cyan);
+}
+
+.tech-badge-red {
+  background: rgba(255, 42, 95, 0.08);
+  border: 1px solid rgba(255, 42, 95, 0.3);
+  color: var(--accent-red);
+}
+
+.tech-badge-emerald {
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: var(--accent-emerald);
+}
+
+.tech-badge-amber {
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  color: var(--accent-amber);
+}
+
+/* Monospace Live Telemetry Row */
+.telemetry-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.06);
+}
+
+html[data-theme="light"] .telemetry-row {
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.08);
+}
+
+/* RTL Support */
+[dir="rtl"] {
+  text-align: right;
+  direction: rtl;
+}
+
+[dir="rtl"] .icon-flip {
+  transform: scaleX(-1);
+}
+
+[dir="rtl"] .technical-corner::before {
+  left: auto;
+  right: -1px;
+  border-left: none;
+  border-right: 2px solid var(--accent-cyan);
+}
+
+[dir="rtl"] .technical-corner::after {
+  right: auto;
+  left: -1px;
+  border-right: none;
+  border-left: 2px solid var(--accent-cyan);
+}
+
+/* Sound toggle indicator */
+.sound-active-wave {
+  animation: wave 1.2s ease-in-out infinite;
+}
+
+@keyframes wave {
+  0%, 100% { height: 4px; }
+  50% { height: 14px; }
+}
+
+/* ==========================================================================
+   COMPREHENSIVE LIGHT MODE OVERRIDES
+   ========================================================================== */
+
+html[data-theme="light"] body {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+}
+
+/* Text Visibility & High Contrast Overrides */
+html[data-theme="light"] .text-white,
+html[data-theme="light"] .text-slate-50,
+html[data-theme="light"] .text-slate-100 {
+  color: #0f172a !important;
+}
+
+html[data-theme="light"] .text-slate-200 {
+  color: #1e293b !important;
+}
+
+html[data-theme="light"] .text-slate-300,
+html[data-theme="light"] .text-gray-300 {
+  color: #334155 !important;
+}
+
+html[data-theme="light"] .text-slate-400,
+html[data-theme="light"] .text-gray-400 {
+  color: #475569 !important;
+}
+
+html[data-theme="light"] .text-slate-500,
+html[data-theme="light"] .text-gray-500 {
+  color: #64748b !important;
+}
+
+/* Accents in Light Mode */
+html[data-theme="light"] .text-cyan-400,
+html[data-theme="light"] .text-cyan-300,
+html[data-theme="light"] .text-cyan-500 {
+  color: #0284c7 !important;
+}
+
+html[data-theme="light"] .text-red-400,
+html[data-theme="light"] .text-red-300,
+html[data-theme="light"] .text-red-500 {
+  color: #dc2626 !important;
+}
+
+html[data-theme="light"] .text-emerald-400,
+html[data-theme="light"] .text-emerald-300 {
+  color: #059669 !important;
+}
+
+html[data-theme="light"] .text-amber-400,
+html[data-theme="light"] .text-amber-300 {
+  color: #d97706 !important;
+}
+
+html[data-theme="light"] .text-violet-400,
+html[data-theme="light"] .text-violet-300 {
+  color: #7c3aed !important;
+}
+
+/* Container & Section Background Overrides */
+html[data-theme="light"] .bg-black,
+html[data-theme="light"] .bg-\[\#05070a\],
+html[data-theme="light"] .bg-\[\#090d14\],
+html[data-theme="light"] .bg-\[\#0d131e\],
+html[data-theme="light"] .bg-\[\#040608\],
+html[data-theme="light"] .bg-\[\#03060a\],
+html[data-theme="light"] [class*="bg-[#05070a]"],
+html[data-theme="light"] [class*="bg-[#090d14]"],
+html[data-theme="light"] [class*="bg-[#0d131e]"],
+html[data-theme="light"] [class*="bg-[#040608]"],
+html[data-theme="light"] [class*="bg-[#03060a]"],
+html[data-theme="light"] .bg-slate-950,
+html[data-theme="light"] .bg-slate-900 {
+  background-color: #ffffff !important;
+}
+
+html[data-theme="light"] .bg-slate-900\/50,
+html[data-theme="light"] .bg-slate-900\/80,
+html[data-theme="light"] .bg-slate-900\/90,
+html[data-theme="light"] .bg-black\/20,
+html[data-theme="light"] .bg-black\/30,
+html[data-theme="light"] .bg-black\/40,
+html[data-theme="light"] .bg-black\/50,
+html[data-theme="light"] .bg-black\/60,
+html[data-theme="light"] .bg-black\/70,
+html[data-theme="light"] .bg-black\/80,
+html[data-theme="light"] .bg-black\/90,
+html[data-theme="light"] .bg-white\/5,
+html[data-theme="light"] .bg-white\/10 {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+}
+
+html[data-theme="light"] .bg-slate-800,
+html[data-theme="light"] .bg-slate-800\/50,
+html[data-theme="light"] .bg-slate-800\/80,
+html[data-theme="light"] .bg-cyan-500\/10,
+html[data-theme="light"] .bg-cyan-500\/5 {
+  background-color: #f1f5f9 !important;
+}
+
+/* Header & Mobile Menu Drawer */
+html[data-theme="light"] header {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border-bottom-color: #e2e8f0 !important;
+}
+
+html[data-theme="light"] #mobile-drawer {
+  background-color: #ffffff !important;
+  border-left-color: #e2e8f0 !important;
+}
+
+/* Borders & Dividers in Light Mode */
+html[data-theme="light"] .border-white\/5,
+html[data-theme="light"] .border-white\/10,
+html[data-theme="light"] .border-white\/20,
+html[data-theme="light"] .border-slate-800,
+html[data-theme="light"] .border-slate-700,
+html[data-theme="light"] .border-slate-900 {
+  border-color: #e2e8f0 !important;
+}
+
+html[data-theme="light"] .border-cyan-500\/10,
+html[data-theme="light"] .border-cyan-500\/15,
+html[data-theme="light"] .border-cyan-500\/20,
+html[data-theme="light"] .border-cyan-500\/30 {
+  border-color: rgba(2, 132, 199, 0.3) !important;
+}
+
+/* Panels & Cards in Light Mode */
+html[data-theme="light"] .vanta-panel,
+html[data-theme="light"] [class*="vanta-panel"] {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -1px rgba(0, 0, 0, 0.04) !important;
+}
+
+html[data-theme="light"] .vanta-panel:hover {
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 10px 25px -5px rgba(2, 132, 199, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Input Fields & Forms */
+html[data-theme="light"] input:not([type="checkbox"]):not([type="radio"]),
+html[data-theme="light"] select,
+html[data-theme="light"] textarea {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+html[data-theme="light"] input::placeholder,
+html[data-theme="light"] textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+html[data-theme="light"] input:focus,
+html[data-theme="light"] select:focus,
+html[data-theme="light"] textarea:focus {
+  border-color: #0284c7 !important;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.2) !important;
+}
+
+/* Buttons in Light Mode */
+html[data-theme="light"] .btn-cyan {
+  background-color: #0284c7 !important;
+  color: #ffffff !important;
+  border-color: #0284c7 !important;
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25) !important;
+}
+
+html[data-theme="light"] .btn-cyan:hover {
+  background-color: #0369a1 !important;
+  border-color: #0369a1 !important;
+  box-shadow: 0 6px 16px rgba(2, 132, 199, 0.35) !important;
+}
+
+html[data-theme="light"] .btn-outline {
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+html[data-theme="light"] .btn-outline:hover {
+  border-color: #0284c7 !important;
+  color: #0284c7 !important;
+  background-color: rgba(2, 132, 199, 0.08) !important;
+}
+
+/* Badges in Light Mode */
+html[data-theme="light"] .tech-badge {
+  background: rgba(2, 132, 199, 0.1) !important;
+  border-color: rgba(2, 132, 199, 0.3) !important;
+  color: #0284c7 !important;
+}
+
+html[data-theme="light"] .tech-badge-red {
+  background: rgba(220, 38, 38, 0.1) !important;
+  border-color: rgba(220, 38, 38, 0.3) !important;
+  color: #dc2626 !important;
+}
+
+html[data-theme="light"] .tech-badge-emerald {
+  background: rgba(5, 150, 105, 0.1) !important;
+  border-color: rgba(5, 150, 105, 0.3) !important;
+  color: #059669 !important;
+}
+
+html[data-theme="light"] .tech-badge-amber {
+  background: rgba(217, 119, 6, 0.1) !important;
+  border-color: rgba(217, 119, 6, 0.3) !important;
+  color: #d97706 !important;
+}
+
+/* Code Snippets & Terminal Elements in Light Mode */
+html[data-theme="light"] code,
+html[data-theme="light"] pre {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+  border: 1px solid #e2e8f0 !important;
+}
+
+/* Footer in Light Mode */
+html[data-theme="light"] footer {
+  background-color: #ffffff !important;
+  border-t-color: #e2e8f0 !important;
+}
+
+/* ==========================================================================
+   HERO SECTION & VISUALIZER LIGHT MODE ENHANCEMENTS
+   ========================================================================== */
+
+/* Hero Title Gradient Fix (ensures text like 'WHAT MATTERS.' does not fade into white) */
+html[data-theme="light"] .bg-clip-text,
+html[data-theme="light"] span[class*="bg-clip-text"] {
+  background-image: linear-gradient(135deg, #0284c7 0%, #0369a1 45%, #0f172a 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+  font-weight: 800 !important;
+}
+
+/* Supporting Paragraph & Sub-texts in Light Mode */
+html[data-theme="light"] p.text-slate-400,
+html[data-theme="light"] p[class*="text-slate-400"] {
+  color: #334155 !important;
+  font-weight: 500 !important;
+}
+
+/* Micro Specs under CTA in Hero */
+html[data-theme="light"] .grid-cols-3 .text-slate-400,
+html[data-theme="light"] .grid-cols-3 .text-\[11px\] {
+  color: #1e293b !important;
+  font-weight: 600 !important;
+}
+
+html[data-theme="light"] .grid-cols-3 .text-cyan-400 {
+  color: #0284c7 !important;
+  font-weight: 800 !important;
+}
+
+/* Technical Status Badges (Top Pill Badges) */
+html[data-theme="light"] .bg-cyan-950\/60,
+html[data-theme="light"] [class*="bg-cyan-950"] {
+  background-color: #f0f9ff !important;
+  border-color: rgba(2, 132, 199, 0.4) !important;
+  color: #0284c7 !important;
+  font-weight: 700 !important;
+}
+
+html[data-theme="light"] .bg-cyan-950\/60 .text-slate-400,
+html[data-theme="light"] [class*="bg-cyan-950"] .text-slate-400 {
+  color: #1e293b !important;
+  font-weight: 600 !important;
+}
+
+html[data-theme="light"] .bg-red-950\/80,
+html[data-theme="light"] [class*="bg-red-950"] {
+  background-color: #fef2f2 !important;
+  border-color: rgba(220, 38, 38, 0.4) !important;
+  color: #dc2626 !important;
+  font-weight: 700 !important;
+}
+
+/* Radar Visual Panel in Light Mode */
+html[data-theme="light"] .technical-corner.vanta-panel,
+html[data-theme="light"] .aspect-square.vanta-panel {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 12px 32px -6px rgba(2, 132, 199, 0.12), 0 4px 12px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+html[data-theme="light"] .technical-corner::before,
+html[data-theme="light"] .technical-corner::after {
+  border-color: #0284c7 !important;
+}
+
+html[data-theme="light"] #hero-radar-canvas,
+html[data-theme="light"] #global-map-canvas,
+html[data-theme="light"] #topology-canvas {
+  background-color: #060c18 !important;
+  border-radius: 4px;
+}
+
+/* Radar Header & Footer text */
+html[data-theme="light"] .aspect-square .text-cyan-400,
+html[data-theme="light"] .vanta-panel .text-cyan-400 {
+  color: #0284c7 !important;
+  font-weight: 700 !important;
+}
+
+html[data-theme="light"] .aspect-square .text-slate-400,
+html[data-theme="light"] .vanta-panel .text-slate-400 {
+  color: #1e293b !important;
+  font-weight: 600 !important;
+}
+
+/* Floating Live Threat Status HUD Card */
+html[data-theme="light"] .bg-slate-950\/90,
+html[data-theme="light"] [class*="bg-slate-950"] {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 14px 40px -8px rgba(0, 0, 0, 0.12) !important;
+}
+
+html[data-theme="light"] .grid-cols-4 > div,
+html[data-theme="light"] .grid-cols-2 > div {
+  background-color: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+}
+
+html[data-theme="light"] .grid-cols-4 .text-\[10px\],
+html[data-theme="light"] .grid-cols-2 .text-\[10px\],
+html[data-theme="light"] .grid-cols-4 .text-slate-400,
+html[data-theme="light"] .grid-cols-2 .text-slate-400 {
+  color: #1e293b !important;
+  font-weight: 700 !important;
+}
+
+/* Buttons in Hero */
+html[data-theme="light"] .btn-outline {
+  color: #0f172a !important;
+  border-color: #0f172a !important;
+  background-color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+html[data-theme="light"] .btn-outline:hover {
+  border-color: #0284c7 !important;
+  color: #0284c7 !important;
+  background-color: #f0f9ff !important;
+}
+
+/* Threat Pulse Telemetry Section */
+html[data-theme="light"] section.bg-black\/60,
+html[data-theme="light"] section[class*="bg-black/60"] {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03) !important;
+}
+
+html[data-theme="light"] section.bg-black\/60 .text-slate-300,
+html[data-theme="light"] section.bg-black\/60 .text-slate-400 {
+  color: #1e293b !important;
+  font-weight: 600 !important;
+}
+
+/* Comprehensive Light Mode Panel & Box Overrides */
+html[data-theme="light"] .vanta-panel,
+html[data-theme="light"] .technical-corner {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.03) !important;
+  color: #0f172a !important;
+}
+
+/* Light Mode Inner Sub-Containers, Feed Cards & Telemetry Boxes */
+html[data-theme="light"] [class*="bg-black"],
+html[data-theme="light"] [class*="bg-slate-900"],
+html[data-theme="light"] [class*="bg-slate-950"],
+html[data-theme="light"] [class*="bg-[#03060a]"],
+html[data-theme="light"] [class*="bg-[#040608]"],
+html[data-theme="light"] [class*="bg-[#090d14]"] {
+  background-color: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+/* Light Mode Alert, Warning, Status & Badge Sub-Boxes */
+html[data-theme="light"] [class*="bg-red-950"] {
+  background-color: #fef2f2 !important;
+  border-color: #fca5a5 !important;
+  color: #991b1b !important;
+}
+
+html[data-theme="light"] [class*="bg-amber-950"] {
+  background-color: #fffbeb !important;
+  border-color: #fcd34d !important;
+  color: #92400e !important;
+}
+
+html[data-theme="light"] [class*="bg-emerald-950"] {
+  background-color: #ecfdf5 !important;
+  border-color: #6ee7b7 !important;
+  color: #065f46 !important;
+}
+
+html[data-theme="light"] [class*="bg-cyan-950"] {
+  background-color: #f0f9ff !important;
+  border-color: #7dd3fc !important;
+  color: #075985 !important;
+}
+
+/* Text Visibility & Contrast inside ALL Light Mode Panels and Sub-Boxes */
+html[data-theme="light"] .vanta-panel .text-white,
+html[data-theme="light"] .vanta-panel .text-slate-100,
+html[data-theme="light"] .vanta-panel .text-slate-200,
+html[data-theme="light"] .vanta-panel .text-slate-300,
+html[data-theme="light"] [class*="bg-"] .text-white,
+html[data-theme="light"] [class*="bg-"] .text-slate-100,
+html[data-theme="light"] [class*="bg-"] .text-slate-200,
+html[data-theme="light"] [class*="bg-"] .text-slate-300,
+html[data-theme="light"] .vanta-panel font,
+html[data-theme="light"] [class*="bg-"] font {
+  color: #0f172a !important;
+  font-weight: 700 !important;
+}
+
+html[data-theme="light"] .vanta-panel .text-slate-400,
+html[data-theme="light"] [class*="bg-"] .text-slate-400,
+html[data-theme="light"] .vanta-panel .text-slate-500,
+html[data-theme="light"] [class*="bg-"] .text-slate-500 {
+  color: #334155 !important;
+  font-weight: 600 !important;
+}
+
+html[data-theme="light"] .vanta-panel .text-cyan-400,
+html[data-theme="light"] [class*="bg-"] .text-cyan-400,
+html[data-theme="light"] .vanta-panel .text-cyan-300,
+html[data-theme="light"] [class*="bg-"] .text-cyan-300 {
+  color: #0284c7 !important;
+  font-weight: 700 !important;
+}
+
+html[data-theme="light"] .vanta-panel .text-amber-400,
+html[data-theme="light"] [class*="bg-"] .text-amber-400,
+html[data-theme="light"] .vanta-panel .text-amber-300,
+html[data-theme="light"] [class*="bg-"] .text-amber-300 {
+  color: #d97706 !important;
+  font-weight: 700 !important;
+}
+
+html[data-theme="light"] .vanta-panel .text-red-400,
+html[data-theme="light"] [class*="bg-"] .text-red-400,
+html[data-theme="light"] .vanta-panel .text-red-300,
+html[data-theme="light"] [class*="bg-"] .text-red-300 {
+  color: #dc2626 !important;
+  font-weight: 700 !important;
+}
+
+html[data-theme="light"] .vanta-panel .text-emerald-400,
+html[data-theme="light"] [class*="bg-"] .text-emerald-400,
+html[data-theme="light"] .vanta-panel .text-emerald-300,
+html[data-theme="light"] [class*="bg-"] .text-emerald-300 {
+  color: #059669 !important;
+  font-weight: 700 !important;
+}
+
+
+
+

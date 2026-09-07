@@ -1,0 +1,546 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Security Operations Command Center — VANTA//SEC</title>
+  <meta name="description" content="Real-time enterprise Security Operations Center (SOC) dashboard. Global threat telemetry, live event streams, risk matrix, and attack surface topology.">
+  <link rel="icon" type="image/svg+xml" href="assets/images/logo.svg">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: ['class', '[data-theme="light"] &'],
+      theme: {
+        extend: {
+          colors: {
+            vanta: {
+              black: '#05070a',
+              dark: '#090d14',
+              surface: '#0d131e',
+              cyan: '#00f0ff',
+              red: '#ff2a5f',
+              violet: '#8b5cf6',
+              muted: '#8b9bb4'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['Space Grotesk', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-tech-grid min-h-screen text-slate-100 selection:bg-cyan-500 selection:text-black">
+
+  <!-- TOP HUD STATUS -->
+  <div class="border-b border-cyan-500/15 bg-black/40 backdrop-blur-md px-4 py-1.5 text-xs font-mono text-cyan-400 flex justify-between items-center z-50 relative">
+    <div class="flex items-center gap-3 overflow-hidden whitespace-nowrap">
+      <span class="inline-flex items-center gap-1.5 text-emerald-400 font-bold">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> SOC LIVE STATUS: UNCOMPROMISED
+      </span>
+      <span class="text-slate-400">|</span>
+      <span class="text-slate-400">CLUSTER: ELASTIC-SEC-GRID-09</span>
+      <span class="text-slate-500 hidden md:inline">|</span>
+      <span class="text-slate-400 hidden md:inline">THREAT INTELLIGENCE SYNC: REAL-TIME</span>
+    </div>
+    <div class="hidden sm:flex items-center gap-3 font-mono text-[11px] text-slate-400">
+      <span>UPTIME: 99.994%</span>
+      <a href="login.html" class="text-amber-400 hover:underline">AUTH: OPERATOR_#402</a>
+    </div>
+  </div>
+
+  <!-- STICKY HEADER -->
+  <header class="sticky top-0 z-40 transition-all duration-300 border-b border-white/5 bg-[var(--header-bg)] backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <a href="index.html" class="flex items-center gap-3 group focus:outline-none">
+        <img src="assets/images/logo.svg" alt="VANTA//SEC" class="w-8 h-8 text-cyan-400 group-hover:scale-105 transition-transform">
+        <div class="flex flex-col">
+          <span class="font-heading font-extrabold text-xl tracking-wider text-white">
+            VANTA<span class="text-cyan-400">//</span>SEC
+          </span>
+          <span class="font-mono text-[9px] tracking-widest text-slate-400 -mt-1 uppercase">
+            Command Center
+          </span>
+        </div>
+      </a>
+
+      <nav class="hidden lg:flex items-center space-x-1 xl:space-x-2 text-sm font-mono">
+        <a href="index.html" class="px-3 py-1.5 text-slate-300 hover:text-cyan-400 transition-colors">Home</a>
+        <a href="command-center.html" class="px-3 py-1.5 text-cyan-400 border-b-2 border-cyan-400 font-medium">Command Center</a>
+        <a href="threat-intelligence.html" class="px-3 py-1.5 text-slate-300 hover:text-cyan-400 transition-colors">Threat Intel</a>
+        <a href="about.html" class="px-3 py-1.5 text-slate-300 hover:text-cyan-400 transition-colors">About</a>
+        <a href="security-advisory.html" class="px-3 py-1.5 text-slate-300 hover:text-cyan-400 transition-colors">Advisory</a>
+      </nav>
+
+      <div class="hidden sm:flex items-center gap-2.5">
+        <button class="btn-sound-toggle p-2 rounded border border-cyan-500/20 hover:border-cyan-400 text-slate-400 hover:text-cyan-400 transition-colors" title="Tactical Audio Toggle"></button>
+        <button class="btn-theme-toggle px-2.5 py-1.5 rounded border border-cyan-500/20 hover:border-cyan-400 flex items-center gap-1.5 transition-colors" title="Toggle Theme">
+          <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+          <span class="text-xs font-mono hidden sm:inline">DARK</span>
+        </button>
+        <a href="login.html" class="btn-cyan ml-1 text-xs py-2 px-4">
+          Request Assessment
+        </a>
+      </div>
+
+      <!-- Mobile Button -->
+      <div class="lg:hidden flex items-center gap-2">
+        <button id="mobile-menu-btn" class="p-2.5 rounded border border-cyan-500/30 text-cyan-400">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div id="drawer-backdrop" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-300 lg:hidden"></div>
+  <div id="mobile-drawer" class="fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-[#090d14] border-l border-cyan-500/20 z-50 translate-x-full transition-transform duration-300 p-6 flex flex-col justify-between lg:hidden">
+    <div>
+      <div class="flex items-center justify-between pb-6 border-b border-white/10">
+        <div class="flex items-center gap-2">
+          <img src="assets/images/logo.svg" alt="VANTA//SEC" class="w-6 h-6">
+          <span class="font-heading font-bold text-lg text-white">VANTA//SEC</span>
+        </div>
+        <button id="drawer-close-btn" class="p-1.5 rounded border border-white/10 text-slate-400">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <nav class="flex flex-col space-y-3 mt-6 font-mono text-sm">
+        <a href="index.html" class="px-3 py-2 text-slate-300 hover:text-cyan-400">Home</a>
+        <a href="command-center.html" class="px-3 py-2 rounded bg-cyan-500/10 text-cyan-400 border-l-2 border-cyan-400">Command Center</a>
+        <a href="threat-intelligence.html" class="px-3 py-2 text-slate-300 hover:text-cyan-400">Threat Intelligence</a>
+        <a href="about.html" class="px-3 py-2 text-slate-300 hover:text-cyan-400">About</a>
+        <a href="security-advisory.html" class="px-3 py-2 text-slate-300 hover:text-cyan-400">Advisory</a>
+        <a href="login.html" class="px-3 py-2 text-amber-400">Client Portal</a>
+      </nav>
+    </div>
+    <div class="pt-6 border-t border-white/10 space-y-4">
+      <a href="login.html" class="btn-cyan w-full text-xs text-center justify-center">Request Assessment</a>
+    </div>
+  </div>
+
+  <!-- COMMAND CENTER HERO -->
+  <section class="pt-10 pb-8 border-b border-cyan-500/15 bg-black/40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded bg-cyan-950/80 border border-cyan-500/30 text-cyan-300 text-xs font-mono uppercase mb-3">
+            <span class="status-dot active"></span> CONSOLE // SOC OPERATIONAL ENVIRONMENT
+          </div>
+          <h1 class="text-3xl sm:text-5xl font-extrabold text-white">THE COMMAND CENTER</h1>
+          <p class="text-slate-400 text-base max-w-2xl mt-1">
+            Complete visibility. Intelligent detection. Faster response. Unified operational telemetry across global enterprise nodes.
+          </p>
+        </div>
+        
+        <!-- Live SOC Telemetry Stat Badges -->
+        <div class="flex items-center gap-4 font-mono text-xs">
+          <div class="p-3 rounded bg-black/60 border border-cyan-500/30 text-center">
+            <div class="text-slate-400 text-[10px]">INGESTION RATE</div>
+            <div class="text-base font-bold text-cyan-400">4.82 M EPS</div>
+          </div>
+          <div class="p-3 rounded bg-black/60 border border-cyan-500/30 text-center">
+            <div class="text-slate-400 text-[10px]">THREAT DEFENSE</div>
+            <div class="text-base font-bold text-emerald-400">AUTONOMOUS</div>
+          </div>
+          <div class="p-3 rounded bg-black/60 border border-red-500/30 text-center">
+            <div class="text-slate-400 text-[10px]">ACTIVE TRIAGE</div>
+            <div class="text-base font-bold text-red-400">03 QUEUED</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN SOC DASHBOARD WORKSPACE -->
+  <main class="py-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+
+    <!-- TOP SECTION: GLOBAL THREAT MAP & LIVE EVENT FEED -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      
+      <!-- Interactive Global Threat Canvas (8 Cols) -->
+      <div class="lg:col-span-8 vanta-panel technical-corner p-4 border border-cyan-500/30 bg-black/70 flex flex-col justify-between">
+        
+        <div class="flex flex-wrap items-center justify-between pb-3 mb-2 border-b border-white/10 font-mono text-xs">
+          <div class="flex items-center gap-2">
+            <span class="status-dot active"></span>
+            <span class="text-white font-bold">GLOBAL THREAT INTELLIGENCE MAP</span>
+            <span class="text-[10px] text-cyan-400 hidden sm:inline">[GEO-LATENCY MATRIX]</span>
+          </div>
+          <div class="flex items-center gap-4 text-[11px] text-slate-400">
+            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-cyan-400"></span> SECURE</span>
+            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-400"></span> MITIGATING</span>
+            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-red-400"></span> ATTACK VECTOR</span>
+          </div>
+        </div>
+
+        <!-- Canvas Container -->
+        <div class="relative w-full h-[360px] sm:h-[420px] bg-[#03060a] rounded border border-white/5 overflow-hidden">
+          <canvas id="global-map-canvas" class="w-full h-full block"></canvas>
+          <div class="absolute bottom-2 left-3 font-mono text-[10px] text-slate-400 bg-black/70 px-2 py-1 rounded border border-white/10">
+            RADAR ORBIT: REAL-TIME TRAJECTORY MONITORING // 9 CONTINENTAL NODES
+          </div>
+        </div>
+
+        <!-- Telemetry bar below map -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-3 mt-2 border-t border-white/10 font-mono text-xs text-slate-300 text-center">
+          <div class="p-1.5 rounded bg-black/40 border border-white/5">
+            <span class="text-slate-400 text-[10px] block">US-EAST LATENCY</span>
+            <span class="text-cyan-400 font-bold">12ms</span>
+          </div>
+          <div class="p-1.5 rounded bg-black/40 border border-white/5">
+            <span class="text-slate-400 text-[10px] block">EU-CENTRAL STATUS</span>
+            <span class="text-emerald-400 font-bold">NOMINAL</span>
+          </div>
+          <div class="p-1.5 rounded bg-black/40 border border-white/5">
+            <span class="text-slate-400 text-[10px] block">AP-SE MITIGATION</span>
+            <span class="text-amber-400 font-bold">SYN FLOOD FILTERED</span>
+          </div>
+          <div class="p-1.5 rounded bg-black/40 border border-white/5">
+            <span class="text-slate-400 text-[10px] block">GLOBAL BGP DRIFT</span>
+            <span class="text-emerald-400 font-bold">0.00%</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Real-Time Security Event Feed (4 Cols) -->
+      <div class="lg:col-span-4 vanta-panel technical-corner p-4 border border-cyan-500/30 bg-black/70 flex flex-col justify-between">
+        
+        <div>
+          <div class="flex items-center justify-between pb-3 mb-3 border-b border-white/10 font-mono text-xs">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+              <span class="text-white font-bold">SECURITY OPERATIONS FEED</span>
+            </div>
+            <button id="pause-feed-btn" class="px-2 py-0.5 rounded border border-white/10 text-[10px] text-slate-400 hover:text-white">
+              PAUSE
+            </button>
+          </div>
+
+          <!-- Feed Filter Tags -->
+          <div class="flex gap-1.5 mb-3 font-mono text-[10px]">
+            <button class="px-2 py-1 rounded bg-cyan-950 text-cyan-300 border border-cyan-500/40">ALL</button>
+            <button class="px-2 py-1 rounded bg-black/50 text-slate-400 hover:text-white border border-white/10">CRITICAL</button>
+            <button class="px-2 py-1 rounded bg-black/50 text-slate-400 hover:text-white border border-white/10">WARNING</button>
+            <button class="px-2 py-1 rounded bg-black/50 text-slate-400 hover:text-white border border-white/10">AUDIT</button>
+          </div>
+
+          <!-- Log Event Stream Container -->
+          <div id="event-stream-container" class="space-y-2.5 overflow-y-auto max-h-[380px] pr-1 font-mono text-xs">
+            
+            <div class="p-2.5 rounded bg-red-950/40 border border-red-500/40">
+              <div class="flex justify-between items-center text-[10px] text-red-400 mb-1">
+                <span>[CRITICAL] ANOMALY//DETECTED</span>
+                <span>JUST NOW</span>
+              </div>
+              <div class="text-white text-[11px] font-bold">Brute-Force SSH Burst blocked on Node AP-SE</div>
+              <div class="text-slate-400 text-[10px] mt-0.5">IP 185.220.101.4 quarantined. 842 attempts neutralized.</div>
+            </div>
+
+            <div class="p-2.5 rounded bg-amber-950/40 border border-amber-500/30">
+              <div class="flex justify-between items-center text-[10px] text-amber-400 mb-1">
+                <span>[WARNING] CVE-2026 PROBE</span>
+                <span>2s AGO</span>
+              </div>
+              <div class="text-white text-[11px] font-bold">Malformed HTTP Deserialization Payload</div>
+              <div class="text-slate-400 text-[10px] mt-0.5">WAF rule #9401 auto-dropped connection.</div>
+            </div>
+
+            <div class="p-2.5 rounded bg-slate-900/60 border border-white/10">
+              <div class="flex justify-between items-center text-[10px] text-cyan-400 mb-1">
+                <span>[INFO] IDENTITY AUDIT</span>
+                <span>7s AGO</span>
+              </div>
+              <div class="text-white text-[11px]">OAuth Token Rotation Verified</div>
+              <div class="text-slate-400 text-[10px] mt-0.5">Service: kubernetes-ingress-controller-3</div>
+            </div>
+
+            <div class="p-2.5 rounded bg-slate-900/60 border border-white/10">
+              <div class="flex justify-between items-center text-[10px] text-cyan-400 mb-1">
+                <span>[INFO] BGP ROUTE CHECK</span>
+                <span>14s AGO</span>
+              </div>
+              <div class="text-white text-[11px]">Autonomous System #13335 Prefix Validated</div>
+              <div class="text-slate-400 text-[10px] mt-0.5">RPKI validation passed without route hijacking.</div>
+            </div>
+
+            <div class="p-2.5 rounded bg-amber-950/40 border border-amber-500/30">
+              <div class="flex justify-between items-center text-[10px] text-amber-400 mb-1">
+                <span>[WARNING] PORT SCAN</span>
+                <span>26s AGO</span>
+              </div>
+              <div class="text-white text-[11px] font-bold">SYN Scan detected against US-WEST-2</div>
+              <div class="text-slate-400 text-[10px] mt-0.5">Origin: 45.154.255.8. Rate limit enforced.</div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="pt-3 mt-3 border-t border-white/10 flex justify-between items-center font-mono text-[11px] text-slate-400">
+          <span>STREAM: REAL-TIME WEBSOCKET</span>
+          <span class="text-emerald-400">LATENCY 8ms</span>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- MIDDLE SECTION: ATTACK SURFACE TOPOLOGY & 4X4 RISK MATRIX -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      
+      <!-- Attack Surface Topology Graph (7 Cols) -->
+      <div class="lg:col-span-7 vanta-panel technical-corner p-5 border border-cyan-500/30 bg-black/70">
+        <div class="flex items-center justify-between pb-3 mb-3 border-b border-white/10 font-mono text-xs">
+          <div class="flex items-center gap-2">
+            <span class="status-dot active"></span>
+            <span class="text-white font-bold">CONNECTED INFRASTRUCTURE TOPOLOGY</span>
+          </div>
+          <span class="text-cyan-400 text-[11px]">8 MAPPED PERIMETERS</span>
+        </div>
+        
+        <!-- Topology Canvas -->
+        <div class="w-full h-[320px] bg-[#03060a] rounded border border-white/5 relative">
+          <canvas id="topology-canvas" class="w-full h-full block"></canvas>
+          <div class="absolute top-2 right-2 font-mono text-[9px] text-slate-400 bg-black/60 px-2 py-1 rounded border border-white/10">
+            NODE COLOR: CYAN (SAFE) | RED (ATTACK SURFACE RISK)
+          </div>
+        </div>
+
+        <div class="flex justify-between items-center pt-3 mt-2 font-mono text-[11px] text-slate-400">
+          <span>CLOUD PERIMETERS: AWS / GCP / ON-PREM</span>
+          <span class="text-amber-400">2 HIGHLIGHTED VULNERABILITY PATHS</span>
+        </div>
+      </div>
+
+      <!-- 4x4 Risk Matrix & Security Health Score (5 Cols) -->
+      <div class="lg:col-span-5 vanta-panel technical-corner p-5 border border-cyan-500/30 bg-black/70 flex flex-col justify-between">
+        
+        <div>
+          <div class="flex items-center justify-between pb-3 mb-4 border-b border-white/10 font-mono text-xs">
+            <span class="text-white font-bold">ENTERPRISE RISK MATRIX</span>
+            <span class="tech-badge">DYNAMIC EVALUATION</span>
+          </div>
+
+          <!-- Overall Risk Gauge -->
+          <div class="p-4 rounded bg-slate-900/60 border border-white/10 mb-5 flex items-center justify-between">
+            <div>
+              <div class="font-mono text-xs text-slate-400">CURRENT POSTURE RATING</div>
+              <div class="text-3xl font-extrabold text-white mt-0.5">88.4 <span class="text-sm font-mono text-cyan-400">/ 100</span></div>
+              <div class="text-xs text-emerald-400 font-mono mt-1">LOW SYSTEMIC EXPOSURE</div>
+            </div>
+            <div class="w-16 h-16 rounded-full border-4 border-cyan-400/40 border-t-cyan-400 flex items-center justify-center font-mono font-bold text-xs text-cyan-400">
+              SECURE
+            </div>
+          </div>
+
+          <!-- 4x4 Risk Classification Grid -->
+          <div class="space-y-2 font-mono text-xs">
+            <div class="flex items-center justify-between p-2.5 rounded bg-red-950/40 border border-red-500/30">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-sm bg-red-500"></span>
+                <span class="text-white font-bold">CRITICAL EXPOSURE</span>
+              </div>
+              <span class="text-red-400 font-bold">02 ASSETS</span>
+            </div>
+            <div class="flex items-center justify-between p-2.5 rounded bg-amber-950/40 border border-amber-500/30">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-sm bg-amber-500"></span>
+                <span class="text-white font-bold">HIGH RISK VECTORS</span>
+              </div>
+              <span class="text-amber-400 font-bold">07 ASSETS</span>
+            </div>
+            <div class="flex items-center justify-between p-2.5 rounded bg-cyan-950/40 border border-cyan-500/30">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-sm bg-cyan-400"></span>
+                <span class="text-white font-bold">MEDIUM WARNING</span>
+              </div>
+              <span class="text-cyan-300 font-bold">14 ASSETS</span>
+            </div>
+            <div class="flex items-center justify-between p-2.5 rounded bg-slate-900/60 border border-white/10">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-sm bg-slate-400"></span>
+                <span class="text-white font-bold">LOW / MONITORED</span>
+              </div>
+              <span class="text-slate-400 font-bold">125 ASSETS</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-3 border-t border-white/10 font-mono text-[11px] text-slate-400 flex justify-between">
+          <span>PRIORITY AUDIT ENGINE: RUNNING</span>
+          <a href="login.html" class="text-cyan-400 hover:underline">RUN NEW SCAN →</a>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- BOTTOM SECTION: INCIDENT QUEUE -->
+    <div class="vanta-panel technical-corner p-6 border border-cyan-500/30 bg-black/70">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 mb-4 border-b border-white/10 font-mono text-xs gap-3">
+        <div class="flex items-center gap-2">
+          <span class="status-dot alert"></span>
+          <span class="text-white font-bold text-sm">INCIDENT TRIAGE QUEUE (ACTIVE RESPONSE READY)</span>
+        </div>
+        <div class="text-slate-400 text-xs">
+          3 UNRESOLVED INCIDENTS // AUTOMATED PLAYBOOKS ENGAGED
+        </div>
+      </div>
+
+      <!-- Incident Queue Table -->
+      <div class="overflow-x-auto font-mono text-xs">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="border-b border-white/10 text-slate-400 text-[11px]">
+              <th class="py-2.5 px-3">INCIDENT ID</th>
+              <th class="py-2.5 px-3">SOURCE VECTOR</th>
+              <th class="py-2.5 px-3">SEVERITY</th>
+              <th class="py-2.5 px-3">AFFECTED ASSET</th>
+              <th class="py-2.5 px-3">DETECTED TIME</th>
+              <th class="py-2.5 px-3 text-right">ACTION</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-white/5 text-slate-300">
+            
+            <tr class="hover:bg-white/5 transition-colors">
+              <td class="py-3 px-3 text-cyan-400 font-bold">#INC-8092</td>
+              <td class="py-3 px-3">Anomalous Outbound SSH Tunnel</td>
+              <td class="py-3 px-3"><span class="px-2 py-0.5 rounded bg-red-950 text-red-400 border border-red-500/30 text-[10px]">CRITICAL</span></td>
+              <td class="py-3 px-3">prod-db-replica-02</td>
+              <td class="py-3 px-3 text-slate-400">00:04:12 ago</td>
+              <td class="py-3 px-3 text-right space-x-2">
+                <button class="px-2.5 py-1 rounded bg-red-950 hover:bg-red-900 border border-red-500/40 text-red-300 text-[11px]">QUARANTINE</button>
+                <a href="threat-intelligence.html" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px]">INVESTIGATE</a>
+              </td>
+            </tr>
+
+            <tr class="hover:bg-white/5 transition-colors">
+              <td class="py-3 px-3 text-cyan-400 font-bold">#INC-8091</td>
+              <td class="py-3 px-3">API Credential Spraying Attempt</td>
+              <td class="py-3 px-3"><span class="px-2 py-0.5 rounded bg-amber-950 text-amber-400 border border-amber-500/30 text-[10px]">HIGH</span></td>
+              <td class="py-3 px-3">auth.internal.api/v2</td>
+              <td class="py-3 px-3 text-slate-400">00:18:45 ago</td>
+              <td class="py-3 px-3 text-right space-x-2">
+                <button class="px-2.5 py-1 rounded bg-cyan-950 hover:bg-cyan-900 border border-cyan-500/40 text-cyan-300 text-[11px]">ROTATE KEYS</button>
+                <a href="threat-intelligence.html" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px]">INVESTIGATE</a>
+              </td>
+            </tr>
+
+            <tr class="hover:bg-white/5 transition-colors">
+              <td class="py-3 px-3 text-cyan-400 font-bold">#INC-8090</td>
+              <td class="py-3 px-3">Privilege Escalation in Pod Sandbox</td>
+              <td class="py-3 px-3"><span class="px-2 py-0.5 rounded bg-amber-950 text-amber-400 border border-amber-500/30 text-[10px]">HIGH</span></td>
+              <td class="py-3 px-3">k8s-node-worker-eu-4</td>
+              <td class="py-3 px-3 text-slate-400">00:42:10 ago</td>
+              <td class="py-3 px-3 text-right space-x-2">
+                <button class="px-2.5 py-1 rounded bg-amber-950 hover:bg-amber-900 border border-amber-500/40 text-amber-300 text-[11px]">CONTAIN POD</button>
+                <a href="threat-intelligence.html" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px]">INVESTIGATE</a>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- COMMAND CENTER BOTTOM CTA -->
+    <div class="vanta-panel technical-corner p-8 bg-gradient-to-r from-cyan-950/40 to-black border border-cyan-500/30 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div>
+        <h2 class="text-2xl font-bold text-white">Enter a Smarter Security Operation</h2>
+        <p class="text-slate-400 text-sm mt-1 max-w-xl">
+          Integrate your entire cloud infrastructure, SIEM, and endpoint fleet into the VANTA//SEC command environment in less than 48 hours.
+        </p>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="login.html" class="btn-cyan text-xs">Request SOC Onboarding</a>
+        <a href="login.html" class="btn-outline text-xs">Operator Login</a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- GLOBAL FOOTER -->
+  <footer class="border-t border-white/10 bg-[#040608] text-slate-400 pt-16 pb-12 font-sans mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-white/10">
+        <div class="lg:col-span-2 space-y-4">
+          <a href="index.html" class="flex items-center gap-2.5">
+            <img src="assets/images/logo.svg" alt="VANTA//SEC" class="w-7 h-7">
+            <span class="font-heading font-extrabold text-xl text-white">VANTA<span class="text-cyan-400">//</span>SEC</span>
+          </a>
+          <p class="text-slate-400 text-sm max-w-sm font-sans leading-relaxed">
+            “See the Threat. Secure the Future.” Enterprise Command Center infrastructure protecting global critical assets against advanced adversaries.
+          </p>
+        </div>
+        <div>
+          <h4 class="font-mono text-xs text-white font-bold uppercase mb-4">Platform</h4>
+          <ul class="space-y-2 text-sm font-sans">
+            <li><a href="command-center.html" class="hover:text-cyan-400">Command Center</a></li>
+            <li><a href="threat-intelligence.html" class="hover:text-cyan-400">Threat Intelligence</a></li>
+            <li><a href="login.html" class="hover:text-cyan-400 transition-colors">Request Assessment</a></li>
+            <li><a href="login.html" class="hover:text-amber-400">Client Portal</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-mono text-xs text-white font-bold uppercase mb-4">Company</h4>
+          <ul class="space-y-2 text-sm font-sans">
+            <li><a href="about.html" class="hover:text-cyan-400">About Us</a></li>
+            <li><a href="login.html" class="hover:text-cyan-400 transition-colors">Contact / Mission</a></li>
+            <li><a href="about.html#doctrine" class="hover:text-cyan-400">Defense Doctrine</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-mono text-xs text-white font-bold uppercase mb-4">Governance</h4>
+          <ul class="space-y-2 text-sm font-sans">
+            <li><a href="security-advisory.html" class="hover:text-cyan-400 transition-colors">Security Practices</a></li>
+            <li><a href="security-advisory.html" class="hover:text-cyan-400 transition-colors">Privacy Policy</a></li>
+            <li><a href="security-advisory.html" class="hover:text-cyan-400 transition-colors">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs text-slate-400">
+        <div>© 2026 VANTA//SEC. All rights reserved.</div>
+        <div class="text-cyan-400">OPERATIONAL STATUS: ACTIVE MONITORING</div>
+      </div>
+    </div>
+  </footer>
+
+  <button id="back-to-top" class="fixed bottom-6 right-6 z-40 p-3 rounded-full bg-cyan-950 border border-cyan-400 text-cyan-400 shadow-xl opacity-0 pointer-events-none transition-all duration-300 hover:scale-110" aria-label="Back to Top">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+  </button>
+
+  <script src="assets/js/soc-visuals.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.VANTA_SOC) {
+        if (window.VANTA_SOC.initGlobalThreatMap) {
+          window.VANTA_SOC.initGlobalThreatMap('global-map-canvas');
+        }
+        if (window.VANTA_SOC.initAttackSurfaceTopology) {
+          window.VANTA_SOC.initAttackSurfaceTopology('topology-canvas');
+        }
+      }
+
+      // Event feed pause button toggle
+      const pauseBtn = document.getElementById('pause-feed-btn');
+      let isPaused = false;
+      if (pauseBtn) {
+        pauseBtn.addEventListener('click', () => {
+          isPaused = !isPaused;
+          pauseBtn.textContent = isPaused ? 'RESUME' : 'PAUSE';
+          pauseBtn.classList.toggle('text-red-400', isPaused);
+        });
+      }
+    });
+  </script>
+</body>
+</html>

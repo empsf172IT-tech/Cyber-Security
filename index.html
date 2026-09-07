@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VANTA//SEC — Enterprise Cybersecurity Command Center</title>
+  <meta name="description" content="VANTA//SEC provides next-generation continuous threat intelligence, vulnerability visibility, and rapid incident response inside an enterprise security command center.">
+  <link rel="icon" type="image/svg+xml" href="assets/images/logo.svg">
+  
+  <!-- Tailwind CSS 3 CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: ['class', '[data-theme="light"] &'],
+      theme: {
+        extend: {
+          colors: {
+            vanta: {
+              black: '#05070a',
+              dark: '#090d14',
+              surface: '#0d131e',
+              cyan: '#00f0ff',
+              red: '#ff2a5f',
+              violet: '#8b5cf6',
+              muted: '#8b9bb4'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['Space Grotesk', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-tech-grid min-h-screen text-slate-100 selection:bg-cyan-500 selection:text-black">
+
+  <!-- TOP TICKER ANNOUNCEMENT -->
+  <div class="border-b border-cyan-500/15 bg-black/40 backdrop-blur-md px-4 py-1.5 text-xs font-mono text-cyan-400/90 flex justify-between items-center z-50 relative">
+    <div class="flex items-center gap-3 overflow-hidden whitespace-nowrap">
+      <span class="inline-flex items-center gap-1 text-red-400 font-bold animate-pulse">
+        <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> LIVE DEFENSE HUD
+      </span>
+      <span class="text-slate-400">|</span>
+      <span class="text-slate-300">TELEMETRY STREAM: NODE US-EAST OPERATING NOMINAL</span>
+      <span class="text-slate-500 hidden md:inline">|</span>
+      <span class="text-slate-400 hidden md:inline">THREAT INTELLIGENCE SYNCED: 0.04s AGO</span>
+    </div>
+    <div class="hidden sm:flex items-center gap-4 text-slate-400">
+      <a href="login.html" class="hover:text-cyan-400 transition-colors flex items-center gap-1 text-[11px]">
+        <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+        </svg>
+        CLIENT PORTAL
+      </a>
+    </div>
+  </div>
+
+  <!-- STICKY ENTERPRISE HEADER -->
+  <header class="sticky top-0 z-40 transition-all duration-300 border-b border-white/5 bg-[var(--header-bg)] backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" class="flex items-center gap-3 group focus:outline-none">
+        <div class="text-cyan-400 group-hover:scale-105 transition-transform">
+          <img src="assets/images/logo.svg" alt="VANTA//SEC" class="w-8 h-8">
+        </div>
+        <div class="flex flex-col">
+          <span class="font-heading font-extrabold text-xl tracking-wider text-white flex items-center gap-1">
+            VANTA<span class="text-cyan-400">//</span>SEC
+          </span>
+          <span class="font-mono text-[9px] tracking-widest text-slate-400 -mt-1 uppercase">
+            Command Center
+          </span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden lg:flex items-center space-x-1 xl:space-x-2 text-sm font-mono" aria-label="Main Navigation">
+        <a href="index.html" class="px-3 py-1.5 text-cyan-400 border-b-2 border-cyan-400 font-medium">Home</a>
+        <a href="command-center.html" class="px-3 py-1.5 text-slate-300 hover:text-cyan-400 transition-colors">Command Center</a>
+        <a href="threat-intelligence.html" class="px-3 py-1.5 text-slate-300 hover:text-cyan-400 transition-colors">Threat Intel</a>
+        <a href="about.html" class="px-3 py-1.5 text-slate-300 hover:text-cyan-400 transition-colors">About</a>
+        <a href="security-advisory.html" class="px-3 py-1.5 text-slate-300 hover:text-cyan-400 transition-colors">Advisory</a>
+      </nav>
+
+      <!-- Right Actions: Sound, Theme, Assessment CTA -->
+      <div class="hidden sm:flex items-center gap-2.5">
+        <!-- Sound Effect Toggle -->
+        <button class="btn-sound-toggle p-2 rounded border border-cyan-500/20 hover:border-cyan-400 text-slate-400 hover:text-cyan-400 transition-colors" title="Tactical Audio Toggle" aria-label="Tactical Audio Toggle">
+          <!-- icon populated by main.js -->
+        </button>
+
+        <!-- Theme Toggle -->
+        <button class="btn-theme-toggle px-2.5 py-1.5 rounded border border-cyan-500/20 hover:border-cyan-400 flex items-center gap-1.5 transition-colors" title="Toggle Theme" aria-label="Toggle Theme">
+          <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+          <span class="text-xs font-mono hidden sm:inline">DARK</span>
+        </button>
+
+        <!-- Primary CTA -->
+        <a href="login.html" class="btn-cyan ml-1 text-xs py-2 px-4">
+          Request Assessment
+        </a>
+      </div>
+
+      <!-- Mobile Hamburger Button -->
+      <div class="lg:hidden flex items-center gap-2">
+        <button class="btn-theme-toggle p-2 rounded border border-white/10" aria-label="Toggle Theme">
+          <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+        </button>
+        <button id="mobile-menu-btn" class="p-2.5 rounded border border-cyan-500/30 text-cyan-400 hover:bg-cyan-500/10 focus:outline-none" aria-label="Open Mobile Menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- MOBILE NAVIGATION DRAWER -->
+  <div id="drawer-backdrop" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-300 lg:hidden"></div>
+  <div id="mobile-drawer" class="fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-[#090d14] border-l border-cyan-500/20 z-50 translate-x-full transition-transform duration-300 p-6 flex flex-col justify-between lg:hidden">
+    <div>
+      <div class="flex items-center justify-between pb-6 border-b border-white/10">
+        <div class="flex items-center gap-2">
+          <img src="assets/images/logo.svg" alt="VANTA//SEC" class="w-6 h-6">
+          <span class="font-heading font-bold text-lg text-white">VANTA//SEC</span>
+        </div>
+        <button id="drawer-close-btn" class="p-1.5 rounded border border-white/10 text-slate-400 hover:text-white" aria-label="Close Menu">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <nav class="flex flex-col space-y-3 mt-6 font-mono text-sm">
+        <a href="index.html" class="px-3 py-2 rounded bg-cyan-500/10 text-cyan-400 border-l-2 border-cyan-400">Home</a>
+        <a href="command-center.html" class="px-3 py-2 text-slate-300 hover:text-cyan-400">Command Center</a>
+        <a href="threat-intelligence.html" class="px-3 py-2 text-slate-300 hover:text-cyan-400">Threat Intelligence</a>
+        <a href="about.html" class="px-3 py-2 text-slate-300 hover:text-cyan-400">About</a>
+        <a href="security-advisory.html" class="px-3 py-2 text-slate-300 hover:text-cyan-400">Advisory</a>
+        <a href="login.html" class="px-3 py-2 text-amber-400 hover:underline">Client Portal</a>
+      </nav>
+    </div>
+
+    <div class="pt-6 border-t border-white/10 space-y-4">
+      <div class="flex items-center justify-between">
+        <span class="text-xs font-mono text-slate-400">ORIENTATION</span>
+      </div>
+      <a href="login.html" class="btn-cyan w-full text-xs text-center justify-center">
+        Request Assessment
+      </a>
+    </div>
+  </div>
+
+  <!-- HERO SECTION -->
+  <section class="relative pt-12 pb-20 md:pt-20 md:pb-28 overflow-hidden">
+    <!-- Ambient Radial glow -->
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-cyan-500/10 blur-[130px] rounded-full pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Left Hero Copy -->
+        <div class="lg:col-span-7 space-y-6">
+          
+          <!-- Small Technical Status -->
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 text-xs font-mono uppercase tracking-wider">
+            <span class="status-dot active"></span>
+            <span>SECURITY OPERATIONS // ACTIVE</span>
+            <span class="text-cyan-500/50">|</span>
+            <span class="text-slate-400">THREAT DEFENSE LVL 1</span>
+          </div>
+
+          <!-- Main Headline -->
+          <h1 class="text-4xl sm:text-6xl xl:text-7xl font-extrabold tracking-tight leading-[1.05] text-white">
+            DEFEND<br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-300 to-white">
+              WHAT MATTERS.
+            </span>
+          </h1>
+
+          <!-- Supporting Text -->
+          <p class="text-lg sm:text-xl text-slate-400 max-w-2xl font-normal leading-relaxed">
+            Continuous threat intelligence, vulnerability visibility, and rapid incident response — unified inside one intelligent security command center.
+          </p>
+
+          <!-- CTA Buttons -->
+          <div class="pt-4 flex flex-wrap gap-4 items-center">
+            <a href="command-center.html" class="btn-cyan group">
+              <span>Explore Command Center</span>
+              <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform icon-flip" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+              </svg>
+            </a>
+            <a href="login.html" class="btn-outline">
+              Request Security Assessment
+            </a>
+          </div>
+
+          <!-- Micro specs under CTA -->
+          <div class="pt-6 grid grid-cols-3 gap-4 border-t border-white/10 max-w-lg font-mono text-xs text-slate-400">
+            <div>
+              <div class="text-cyan-400 font-bold text-sm">24/7/365</div>
+              <div class="text-[11px] text-slate-400">Autonomous SOC</div>
+            </div>
+            <div>
+              <div class="text-cyan-400 font-bold text-sm">&lt; 15 MIN</div>
+              <div class="text-[11px] text-slate-400">Containment SLA</div>
+            </div>
+            <div>
+              <div class="text-cyan-400 font-bold text-sm">ZERO-TRUST</div>
+              <div class="text-[11px] text-slate-400">Telemetry Engine</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Hero Visual: Radar Canvas + Floating Telemetry HUD -->
+        <div class="lg:col-span-5 relative flex flex-col items-center">
+          
+          <div class="w-full max-w-[420px] aspect-square relative vanta-panel technical-corner p-3 bg-black/70 border border-cyan-500/30 overflow-hidden shadow-2xl">
+            <!-- Header bar of radar module -->
+            <div class="flex justify-between items-center pb-2 mb-2 border-b border-cyan-500/20 font-mono text-[10px] text-cyan-400">
+              <span class="flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-ping"></span>
+                PERIMETER RADAR // ACTIVE
+              </span>
+              <span class="text-slate-400">FREQ 9.4 GHz</span>
+            </div>
+
+            <!-- Radar Canvas -->
+            <canvas id="hero-radar-canvas" class="w-full h-[320px] block"></canvas>
+
+            <!-- Bottom radar coordinate bar -->
+            <div class="flex justify-between items-center pt-2 mt-1 border-t border-white/5 font-mono text-[9px] text-slate-400">
+              <span>LAT 38.8951° N</span>
+              <span class="text-emerald-400">SHIELD STRENGTH: 99.8%</span>
+              <span>LON 77.0364° W</span>
+            </div>
+          </div>
+
+          <!-- Floating Security Status Panel -->
+          <div class="w-full max-w-[390px] mt-6 relative z-20 vanta-panel p-4 border border-cyan-500/40 bg-slate-950/90 shadow-xl technical-corner">
+            <div class="text-xs font-mono text-slate-400 mb-3 flex items-center justify-between">
+              <span class="text-cyan-400 font-semibold tracking-wider flex items-center gap-1.5">
+                <span class="status-dot active"></span> LIVE THREAT STATUS
+              </span>
+              <span class="text-[10px] text-slate-400">SYNCED NOMINAL</span>
+            </div>
+            
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center font-mono">
+              <div class="p-2 rounded bg-black/40 border border-white/5">
+                <div class="text-xs text-slate-400 uppercase text-[10px]">Threats Detected</div>
+                <div id="telemetry-events" class="text-lg font-bold text-amber-400">24</div>
+              </div>
+              <div class="p-2 rounded bg-black/40 border border-white/5">
+                <div class="text-xs text-slate-400 uppercase text-[10px]">Critical Events</div>
+                <div class="text-lg font-bold text-red-500">02</div>
+              </div>
+              <div class="p-2 rounded bg-black/40 border border-white/5">
+                <div class="text-xs text-slate-400 uppercase text-[10px]">System Health</div>
+                <div class="text-lg font-bold text-emerald-400">99.8%</div>
+              </div>
+              <div class="p-2 rounded bg-black/40 border border-white/5">
+                <div class="text-xs text-slate-400 uppercase text-[10px]">Global Nodes</div>
+                <div class="text-lg font-bold text-cyan-400">148</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- THREAT PULSE SECTION (Live Telemetry Bar) -->
+  <section class="border-y border-cyan-500/20 bg-black/60 py-4 px-4 sm:px-6 relative overflow-hidden backdrop-blur-md">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 font-mono text-xs">
+      
+      <div class="flex items-center gap-3 w-full md:w-auto">
+        <span class="px-2.5 py-1 rounded bg-red-950/80 border border-red-500/40 text-red-400 font-bold tracking-wider flex items-center gap-1.5 shrink-0">
+          <span class="status-dot alert"></span> THREAT PULSE
+        </span>
+        <span class="text-slate-400 hidden sm:inline text-[11px]">AUTONOMOUS DEFENSE TELEMETRY</span>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-between md:justify-end gap-x-6 gap-y-2 w-full md:w-auto text-slate-300">
+        <div>
+          <span class="text-slate-400">NETWORK SCAN:</span> 
+          <span class="text-cyan-400 font-bold">99.8%</span>
+        </div>
+        <div>
+          <span class="text-slate-400">ACTIVE EVENTS:</span> 
+          <span class="text-amber-400 font-bold">24</span>
+        </div>
+        <div>
+          <span class="text-slate-400">CRITICAL:</span> 
+          <span class="text-red-400 font-bold">02</span>
+        </div>
+        <div>
+          <span class="text-slate-400">SYSTEM STATUS:</span> 
+          <span class="text-emerald-400 font-bold">SECURE</span>
+        </div>
+        <div>
+          <span class="text-slate-400">GLOBAL NODES:</span> 
+          <span class="text-cyan-300 font-bold">148</span>
+        </div>
+        <div class="hidden xl:flex items-center gap-1 text-slate-400">
+          <span>BLOCKED TODAY:</span>
+          <span id="telemetry-blocked" class="text-cyan-400 font-bold">48,192</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECURITY OVERVIEW SECTION -->
+  <section class="py-20 md:py-28 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+        <div class="tech-badge">COMMAND ARCHITECTURE</div>
+        <h2 class="text-3xl sm:text-5xl font-extrabold text-white">
+          One Command Center.<br>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-teal-300">
+            Total Security Visibility.
+          </span>
+        </h2>
+        <p class="text-slate-400 text-base sm:text-lg">
+          VANTA//SEC replaces fragmented point solutions by unifying telemetry, adversary intelligence, automated triage, and compliance governance into a single cyber command platform.
+        </p>
+      </div>
+
+      <!-- 5 Premium Technical Feature Panels -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <!-- Panel 1: Threat Monitoring -->
+        <div class="vanta-panel technical-corner p-7 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-mono text-xs text-cyan-400 font-bold">MOD//01</span>
+              <span class="tech-badge">REAL-TIME SOC</span>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">Threat Monitoring</h3>
+            <p class="text-slate-400 text-sm leading-relaxed mb-6">
+              Continuous multi-cloud and perimeter telemetry ingestion with microsecond machine-learning correlation for anomalous egress and lateral movements.
+            </p>
+          </div>
+          <div class="p-3 bg-black/40 rounded border border-white/5 font-mono text-[11px] text-slate-400 space-y-1.5">
+            <div class="flex justify-between"><span>INGESTION RATE:</span><span class="text-cyan-400">4.2M EPS</span></div>
+            <div class="flex justify-between"><span>FALSE POSITIVES:</span><span class="text-emerald-400">&lt; 0.001%</span></div>
+          </div>
+        </div>
+
+        <!-- Panel 2: Attack Surface Visibility -->
+        <div class="vanta-panel technical-corner p-7 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-mono text-xs text-cyan-400 font-bold">MOD//02</span>
+              <span class="tech-badge">ASSET MAPPING</span>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">Attack Surface Visibility</h3>
+            <p class="text-slate-400 text-sm leading-relaxed mb-6">
+              Automated recursive discovery of external shadow IT, misconfigured DNS vectors, exposed S3 buckets, and unauthenticated internal staging APIs.
+            </p>
+          </div>
+          <div class="p-3 bg-black/40 rounded border border-white/5 font-mono text-[11px] text-slate-400 space-y-1.5">
+            <div class="flex justify-between"><span>DISCOVERY CYCLE:</span><span class="text-cyan-400">CONTINUOUS</span></div>
+            <div class="flex justify-between"><span>SHADOW IT ALERTS:</span><span class="text-amber-400">ZERO TOLERANCE</span></div>
+          </div>
+        </div>
+
+        <!-- Panel 3: Risk Intelligence -->
+        <div class="vanta-panel technical-corner p-7 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-mono text-xs text-cyan-400 font-bold">MOD//03</span>
+              <span class="tech-badge">ADVERSARY INTEL</span>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">Risk Intelligence</h3>
+            <p class="text-slate-400 text-sm leading-relaxed mb-6">
+              Actionable adversary dossiers mapped to MITRE ATT&amp;CK frameworks. Prioritize vulnerabilities by weaponization probability, not raw CVSS noise.
+            </p>
+          </div>
+          <div class="p-3 bg-black/40 rounded border border-white/5 font-mono text-[11px] text-slate-400 space-y-1.5">
+            <div class="flex justify-between"><span>IOC FEEDS:</span><span class="text-cyan-400">187 GLOBAL PARTNERS</span></div>
+            <div class="flex justify-between"><span>PREDICTIVE ACCURACY:</span><span class="text-emerald-400">97.4%</span></div>
+          </div>
+        </div>
+
+        <!-- Panel 4: Incident Response -->
+        <div class="vanta-panel technical-corner p-7 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-mono text-xs text-cyan-400 font-bold">MOD//04</span>
+              <span class="tech-badge-red">RAPID CONTAINMENT</span>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">Incident Response</h3>
+            <p class="text-slate-400 text-sm leading-relaxed mb-6">
+              Orchestrated automated containment playbooks. Isolate compromised endpoints, revoke active tokens, and preserve forensic artifacts in seconds.
+            </p>
+          </div>
+          <div class="p-3 bg-black/40 rounded border border-white/5 font-mono text-[11px] text-slate-400 space-y-1.5">
+            <div class="flex justify-between"><span>CONTAINMENT TIME:</span><span class="text-cyan-400">&lt; 90 SECONDS</span></div>
+            <div class="flex justify-between"><span>FORENSIC LOGS:</span><span class="text-emerald-400">CRYPTOGRAPHICALLY SEALED</span></div>
+          </div>
+        </div>
+
+        <!-- Panel 5: Compliance Monitoring -->
+        <div class="vanta-panel technical-corner p-7 flex flex-col justify-between md:col-span-2 lg:col-span-2">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="font-mono text-xs text-cyan-400 font-bold">MOD//05</span>
+                <span class="tech-badge-emerald">GOVERNANCE &amp; AUDIT</span>
+              </div>
+              <h3 class="text-xl font-bold text-white mb-2">Compliance Monitoring</h3>
+              <p class="text-slate-400 text-sm leading-relaxed">
+                Automated continuous evidence collection against SOC 2, ISO 27001, GDPR, and PCI DSS. Instant executive reporting with audit-ready traceability.
+              </p>
+            </div>
+            <div class="flex flex-col justify-center space-y-2 font-mono text-xs">
+              <div class="flex items-center justify-between p-2 bg-black/30 rounded border border-white/5">
+                <span>SOC 2 TYPE II CONTROLS:</span><span class="text-emerald-400">100% VERIFIED</span>
+              </div>
+              <div class="flex items-center justify-between p-2 bg-black/30 rounded border border-white/5">
+                <span>ISO 27001:2022 ALIGNMENT:</span><span class="text-cyan-400">ACTIVE DRIFT GUARD</span>
+              </div>
+              <div class="flex items-center justify-between p-2 bg-black/30 rounded border border-white/5">
+                <span>GDPR / PRIVACY GOVERNANCE:</span><span class="text-emerald-400">CONTINUOUS AUDIT</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- THREAT INTELLIGENCE PREVIEW SECTION -->
+  <section class="py-20 bg-black/40 border-t border-cyan-500/15 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <div class="lg:col-span-6 space-y-6">
+          <div class="tech-badge">EARLY WARNING RADAR</div>
+          <h2 class="text-3xl sm:text-5xl font-extrabold text-white leading-tight">
+            Know the Threat Before It Becomes an Incident.
+          </h2>
+          <p class="text-slate-400 text-base sm:text-lg leading-relaxed">
+            Real-time adversary telemetry tracks evolving ransomware strains, nation-state actors, and zero-day exploits across dark web syndicates and underground telemetry channels before weaponization.
+          </p>
+
+          <div class="space-y-3 font-mono text-sm">
+            <div class="flex items-start gap-3 p-3 rounded bg-slate-900/60 border border-white/5">
+              <span class="text-cyan-400 font-bold">01</span>
+              <div>
+                <strong class="text-white">Threat Actor Tracking:</strong> Detailed dossiers on APTs, infrastructure signatures, and operational tooling.
+              </div>
+            </div>
+            <div class="flex items-start gap-3 p-3 rounded bg-slate-900/60 border border-white/5">
+              <span class="text-cyan-400 font-bold">02</span>
+              <div>
+                <strong class="text-white">Indicators of Compromise:</strong> Real-time SHA-256 hashes, malicious C2 IP feeds, and TLS fingerprint matching.
+              </div>
+            </div>
+            <div class="flex items-start gap-3 p-3 rounded bg-slate-900/60 border border-white/5">
+              <span class="text-cyan-400 font-bold">03</span>
+              <div>
+                <strong class="text-white">Predictive Attack Paths:</strong> Graph correlation identifying which cloud assets are reachable if a perimeter node is breached.
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-2">
+            <a href="threat-intelligence.html" class="btn-cyan">
+              Explore Threat Intelligence
+            </a>
+          </div>
+        </div>
+
+        <!-- Threat Intelligence Visual Module -->
+        <div class="lg:col-span-6">
+          <div class="vanta-panel technical-corner p-6 border border-cyan-500/30 bg-slate-950/80">
+            <div class="flex justify-between items-center pb-3 mb-4 border-b border-white/10 font-mono text-xs">
+              <span class="text-cyan-400 font-bold flex items-center gap-2">
+                <span class="status-dot active"></span> APT SIGNATURE MONITOR
+              </span>
+              <span class="text-slate-400">DATABASE: UPDATED NOW</span>
+            </div>
+
+            <!-- Threat Intel Cards -->
+            <div class="space-y-3 font-mono text-xs">
+              
+              <div class="p-3 bg-black/40 rounded border border-red-500/30 flex justify-between items-center">
+                <div>
+                  <div class="text-red-400 font-bold">ACTOR: APT-41 // SILVER CYCLONE</div>
+                  <div class="text-slate-400 text-[11px]">TARGET: Enterprise API Gateways &amp; Kubernetes Clusters</div>
+                </div>
+                <span class="px-2 py-1 rounded bg-red-950 text-red-400 text-[10px] font-bold border border-red-500/40">CRITICAL</span>
+              </div>
+
+              <div class="p-3 bg-black/40 rounded border border-amber-500/30 flex justify-between items-center">
+                <div>
+                  <div class="text-amber-400 font-bold">EXPLOIT: CVE-2026-1184 WEAPONIZATION</div>
+                  <div class="text-slate-400 text-[11px]">TYPE: Remote Code Execution via Deserialization</div>
+                </div>
+                <span class="px-2 py-1 rounded bg-amber-950 text-amber-400 text-[10px] font-bold border border-amber-500/40">HIGH RISK</span>
+              </div>
+
+              <div class="p-3 bg-black/40 rounded border border-cyan-500/30 flex justify-between items-center">
+                <div>
+                  <div class="text-cyan-300 font-bold">TELEMETRY: BOTNET C2 SWARM 0x88F</div>
+                  <div class="text-slate-400 text-[11px]">ACTIVE IP NODES: 1,492 IN EASTERN EUROPE &amp; ASIA</div>
+                </div>
+                <span class="px-2 py-1 rounded bg-cyan-950 text-cyan-400 text-[10px] font-bold border border-cyan-500/40">BLOCKED</span>
+              </div>
+
+            </div>
+
+            <!-- Threat Graph Chain preview -->
+            <div class="mt-6 pt-4 border-t border-white/10">
+              <div class="text-[11px] font-mono text-slate-400 uppercase mb-3">Attack Vector Chain Simulation:</div>
+              <div class="flex items-center justify-between text-[11px] font-mono text-center overflow-x-auto pb-2">
+                <div class="px-2 py-1 rounded bg-slate-900 border border-white/10 text-slate-300 shrink-0">Actor</div>
+                <span class="text-cyan-400 px-1">→</span>
+                <div class="px-2 py-1 rounded bg-slate-900 border border-white/10 text-slate-300 shrink-0">Infra</div>
+                <span class="text-cyan-400 px-1">→</span>
+                <div class="px-2 py-1 rounded bg-slate-900 border border-white/10 text-amber-300 shrink-0">Vulnerability</div>
+                <span class="text-cyan-400 px-1">→</span>
+                <div class="px-2 py-1 rounded bg-slate-900 border border-white/10 text-red-400 shrink-0">Payload</div>
+                <span class="text-cyan-400 px-1">→</span>
+                <div class="px-2 py-1 rounded bg-cyan-950 border border-cyan-400 text-cyan-300 font-bold shrink-0">Shield Active</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- VULNERABILITY DASHBOARD SECTION -->
+  <section class="py-20 border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+        <div class="space-y-3">
+          <div class="tech-badge">CONTINUOUS AUDIT &amp; TESTING</div>
+          <h2 class="text-3xl sm:text-5xl font-extrabold text-white">
+            Find the Weakness. Fix the Risk.
+          </h2>
+          <p class="text-slate-400 max-w-2xl text-base sm:text-lg">
+            Continuous automated penetration sweeps and asset risk prioritization ensure your engineering teams fix what matters before attackers exploit it.
+          </p>
+        </div>
+        <div>
+          <a href="login.html" class="btn-cyan">
+            Assess Your Attack Surface
+          </a>
+        </div>
+      </div>
+
+      <!-- Severity Matrix Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 font-mono mb-10">
+        
+        <div class="vanta-panel p-6 border-t-2 border-t-red-500">
+          <div class="flex justify-between items-center text-xs text-slate-400 mb-2">
+            <span>SEVERITY LVL</span>
+            <span class="text-red-500 font-bold">9.0 - 10.0</span>
+          </div>
+          <div class="text-2xl font-bold text-white mb-1">CRITICAL</div>
+          <div class="text-3xl font-extrabold text-red-500 mb-3">02</div>
+          <p class="text-[11px] text-slate-400 font-sans">Immediate RCE or authentication bypass risks requiring same-day remediation patch.</p>
+        </div>
+
+        <div class="vanta-panel p-6 border-t-2 border-t-amber-500">
+          <div class="flex justify-between items-center text-xs text-slate-400 mb-2">
+            <span>SEVERITY LVL</span>
+            <span class="text-amber-500 font-bold">7.0 - 8.9</span>
+          </div>
+          <div class="text-2xl font-bold text-white mb-1">HIGH</div>
+          <div class="text-3xl font-extrabold text-amber-500 mb-3">07</div>
+          <p class="text-[11px] text-slate-400 font-sans">Privilege escalation and internal cross-tenant data leakage vectors.</p>
+        </div>
+
+        <div class="vanta-panel p-6 border-t-2 border-t-cyan-400">
+          <div class="flex justify-between items-center text-xs text-slate-400 mb-2">
+            <span>SEVERITY LVL</span>
+            <span class="text-cyan-400 font-bold">4.0 - 6.9</span>
+          </div>
+          <div class="text-2xl font-bold text-white mb-1">MEDIUM</div>
+          <div class="text-3xl font-extrabold text-cyan-400 mb-3">14</div>
+          <p class="text-[11px] text-slate-400 font-sans">Missing rate limits, permissive CORS headers, and verbose error stacks.</p>
+        </div>
+
+        <div class="vanta-panel p-6 border-t-2 border-t-slate-500">
+          <div class="flex justify-between items-center text-xs text-slate-400 mb-2">
+            <span>SEVERITY LVL</span>
+            <span class="text-slate-400 font-bold">0.1 - 3.9</span>
+          </div>
+          <div class="text-2xl font-bold text-white mb-1">LOW</div>
+          <div class="text-3xl font-extrabold text-slate-400 mb-3">38</div>
+          <p class="text-[11px] text-slate-400 font-sans">Banner information disclosure and software version fingerprinting.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- INCIDENT RESPONSE TIMELINE SECTION -->
+  <section class="py-20 bg-black/60 border-t border-cyan-500/15 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+        <div class="tech-badge-red">INCIDENT LIFECYCLE SLA &lt; 15M</div>
+        <h2 class="text-3xl sm:text-5xl font-extrabold text-white">
+          When Threats Strike, Response Starts Immediately.
+        </h2>
+        <p class="text-slate-400 text-base sm:text-lg">
+          Autonomous telemetry triggers instant containment playbooks, forensic evidence preservation, and elite digital war room mobilization.
+        </p>
+      </div>
+
+      <!-- Timeline visual progression -->
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 font-mono text-xs">
+        
+        <div class="vanta-panel p-4 technical-corner border border-cyan-500/30 text-center">
+          <div class="text-cyan-400 font-bold text-sm mb-1">01 DETECT</div>
+          <div class="w-2 h-2 bg-cyan-400 rounded-full mx-auto my-2 animate-ping"></div>
+          <div class="text-white font-bold mb-1">Telemetry Alert</div>
+          <p class="text-[10px] text-slate-400 font-sans">Anomalous egress identified at 0.02s.</p>
+        </div>
+
+        <div class="vanta-panel p-4 technical-corner border border-cyan-500/30 text-center">
+          <div class="text-cyan-400 font-bold text-sm mb-1">02 TRIAGE</div>
+          <div class="w-2 h-2 bg-cyan-400 rounded-full mx-auto my-2"></div>
+          <div class="text-white font-bold mb-1">Severity Scoring</div>
+          <p class="text-[10px] text-slate-400 font-sans">Correlated with active adversary IOCs.</p>
+        </div>
+
+        <div class="vanta-panel p-4 technical-corner border border-red-500/40 text-center">
+          <div class="text-red-400 font-bold text-sm mb-1">03 CONTAIN</div>
+          <div class="w-2 h-2 bg-red-500 rounded-full mx-auto my-2"></div>
+          <div class="text-white font-bold mb-1">Micro-Isolation</div>
+          <p class="text-[10px] text-slate-400 font-sans">Subnet quarantined, active tokens revoked.</p>
+        </div>
+
+        <div class="vanta-panel p-4 technical-corner border border-cyan-500/30 text-center">
+          <div class="text-cyan-400 font-bold text-sm mb-1">04 INVESTIGATE</div>
+          <div class="w-2 h-2 bg-cyan-400 rounded-full mx-auto my-2"></div>
+          <div class="text-white font-bold mb-1">Forensic Capture</div>
+          <p class="text-[10px] text-slate-400 font-sans">Memory snapshots cryptographically hashed.</p>
+        </div>
+
+        <div class="vanta-panel p-4 technical-corner border border-cyan-500/30 text-center">
+          <div class="text-cyan-400 font-bold text-sm mb-1">05 ERADICATE</div>
+          <div class="w-2 h-2 bg-cyan-400 rounded-full mx-auto my-2"></div>
+          <div class="text-white font-bold mb-1">Threat Removal</div>
+          <p class="text-[10px] text-slate-400 font-sans">Backdoors purged, vulnerabilities patched.</p>
+        </div>
+
+        <div class="vanta-panel p-4 technical-corner border border-emerald-500/40 text-center">
+          <div class="text-emerald-400 font-bold text-sm mb-1">06 RECOVER</div>
+          <div class="w-2 h-2 bg-emerald-400 rounded-full mx-auto my-2"></div>
+          <div class="text-white font-bold mb-1">Resumption</div>
+          <p class="text-[10px] text-slate-400 font-sans">Clean service redeployment &amp; audit signoff.</p>
+        </div>
+
+      </div>
+
+      <div class="text-center mt-10">
+        <a href="command-center.html" class="btn-cyan">
+          Explore Incident Response in SOC
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- COMPLIANCE SECTION -->
+  <section class="py-20 border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <div class="lg:col-span-5 space-y-6">
+          <div class="tech-badge-emerald">AUDIT READINESS &amp; GOVERNANCE</div>
+          <h2 class="text-3xl sm:text-5xl font-extrabold text-white leading-tight">
+            Security That Stands Up to Scrutiny.
+          </h2>
+          <p class="text-slate-400 text-base sm:text-lg leading-relaxed">
+            Continuous proof, not point-in-time screenshots. Keep your organization permanently audit-ready across leading international cybersecurity and data privacy frameworks.
+          </p>
+          <div class="pt-2">
+            <a href="login.html" class="btn-cyan">
+              Request Compliance Assessment
+            </a>
+          </div>
+        </div>
+
+        <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4 font-mono text-xs">
+          
+          <div class="vanta-panel p-6 border border-white/10">
+            <div class="text-cyan-400 font-bold text-base mb-1">ISO 27001:2022</div>
+            <p class="text-slate-400 font-sans text-xs mb-3">Information Security Management System (ISMS) continuous control validation.</p>
+            <div class="text-[11px] text-emerald-400">STATUS: 93/93 CONTROLS VERIFIED</div>
+          </div>
+
+          <div class="vanta-panel p-6 border border-white/10">
+            <div class="text-cyan-400 font-bold text-base mb-1">SOC 2 TYPE II</div>
+            <p class="text-slate-400 font-sans text-xs mb-3">Security, Availability, and Confidentiality Trust Services Criteria telemetry.</p>
+            <div class="text-[11px] text-emerald-400">STATUS: ZERO AUDIT EXCEPTIONS</div>
+          </div>
+
+          <div class="vanta-panel p-6 border border-white/10">
+            <div class="text-cyan-400 font-bold text-base mb-1">GDPR &amp; PRIVACY</div>
+            <p class="text-slate-400 font-sans text-xs mb-3">Data subject access rights, residency controls, and cross-border encryption audit.</p>
+            <div class="text-[11px] text-emerald-400">STATUS: CONTINUOUS COMPLIANCE</div>
+          </div>
+
+          <div class="vanta-panel p-6 border border-white/10">
+            <div class="text-cyan-400 font-bold text-base mb-1">PCI DSS 4.0</div>
+            <p class="text-slate-400 font-sans text-xs mb-3">Payment card environment segmentation, multi-factor tokenization, and TLS 1.3 audit.</p>
+            <div class="text-[11px] text-emerald-400">STATUS: LEVEL 1 ASSESSED READY</div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECURITY METRICS SECTION -->
+  <section class="py-20 bg-cyan-950/20 border-y border-cyan-500/20 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center font-mono">
+        
+        <div class="p-6 vanta-panel">
+          <div class="text-4xl sm:text-6xl font-extrabold text-cyan-400 mb-2">24/7</div>
+          <div class="text-sm font-bold text-white tracking-wider">SECURITY MONITORING</div>
+          <div class="text-xs text-slate-400 font-sans mt-1">Autonomous AI + elite Tier-3 SOC engineers</div>
+        </div>
+
+        <div class="p-6 vanta-panel">
+          <div class="text-4xl sm:text-6xl font-extrabold text-emerald-400 mb-2">99.8%</div>
+          <div class="text-sm font-bold text-white tracking-wider">SYSTEM VISIBILITY</div>
+          <div class="text-xs text-slate-400 font-sans mt-1">Across hybrid cloud, SaaS, and edge hardware</div>
+        </div>
+
+        <div class="p-6 vanta-panel">
+          <div class="text-4xl sm:text-6xl font-extrabold text-cyan-300 mb-2">360°</div>
+          <div class="text-sm font-bold text-white tracking-wider">ATTACK SURFACE INTEL</div>
+          <div class="text-xs text-slate-400 font-sans mt-1">External exposure mapping &amp; dark web radar</div>
+        </div>
+
+        <div class="p-6 vanta-panel">
+          <div class="text-4xl sm:text-6xl font-extrabold text-red-400 mb-2">&lt; 15 min</div>
+          <div class="text-sm font-bold text-white tracking-wider">RESPONSE TARGET</div>
+          <div class="text-xs text-slate-400 font-sans mt-1">Contractually guaranteed containment SLA</div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- INDUSTRIES SECTION -->
+  <section class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-2xl mx-auto mb-14 space-y-3">
+        <div class="tech-badge">ENTERPRISE SECTORS</div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white">
+          Mission-Critical Defense for Regulated Industries.
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 font-mono text-center">
+        
+        <div class="vanta-panel p-5 technical-corner hover:border-cyan-400">
+          <div class="w-10 h-10 mx-auto mb-3 rounded-full bg-cyan-500/10 flex items-center justify-center text-cyan-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <div class="text-xs font-bold text-white">FINANCIAL SERVICES</div>
+          <div class="text-[10px] text-slate-400 mt-1">SWIFT &amp; Banking</div>
+        </div>
+
+        <div class="vanta-panel p-5 technical-corner hover:border-cyan-400">
+          <div class="w-10 h-10 mx-auto mb-3 rounded-full bg-cyan-500/10 flex items-center justify-center text-cyan-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+          </div>
+          <div class="text-xs font-bold text-white">HEALTHCARE</div>
+          <div class="text-[10px] text-slate-400 mt-1">HIPAA &amp; Hospital EMR</div>
+        </div>
+
+        <div class="vanta-panel p-5 technical-corner hover:border-cyan-400">
+          <div class="w-10 h-10 mx-auto mb-3 rounded-full bg-cyan-500/10 flex items-center justify-center text-cyan-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+          </div>
+          <div class="text-xs font-bold text-white">TECHNOLOGY</div>
+          <div class="text-[10px] text-slate-400 mt-1">SaaS &amp; Cloud Infra</div>
+        </div>
+
+        <div class="vanta-panel p-5 technical-corner hover:border-cyan-400">
+          <div class="w-10 h-10 mx-auto mb-3 rounded-full bg-cyan-500/10 flex items-center justify-center text-cyan-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+          </div>
+          <div class="text-xs font-bold text-white">RETAIL &amp; E-COMMERCE</div>
+          <div class="text-[10px] text-slate-400 mt-1">PCI-DSS High Volume</div>
+        </div>
+
+        <div class="vanta-panel p-5 technical-corner hover:border-cyan-400">
+          <div class="w-10 h-10 mx-auto mb-3 rounded-full bg-cyan-500/10 flex items-center justify-center text-cyan-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+          </div>
+          <div class="text-xs font-bold text-white">MANUFACTURING</div>
+          <div class="text-[10px] text-slate-400 mt-1">SCADA &amp; Industrial IoT</div>
+        </div>
+
+        <div class="vanta-panel p-5 technical-corner hover:border-cyan-400">
+          <div class="w-10 h-10 mx-auto mb-3 rounded-full bg-cyan-500/10 flex items-center justify-center text-cyan-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          </div>
+          <div class="text-xs font-bold text-white">GLOBAL ENTERPRISE</div>
+          <div class="text-[10px] text-slate-400 mt-1">Multi-Tenant Global</div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FINAL CTA SECTION -->
+  <section class="py-24 bg-black/80 border-t border-cyan-500/20 relative overflow-hidden">
+    <div class="absolute inset-0 bg-radial-gradient pointer-events-none"></div>
+
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 space-y-6">
+      <div class="tech-badge">INITIALIZE OPERATION</div>
+      <h2 class="text-4xl sm:text-6xl font-extrabold text-white tracking-tight">
+        Your Security Command Center Starts Here.
+      </h2>
+      <p class="text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto">
+        Turn fragmented security operations into one intelligent defense system. Get full visibility over threats, assets, and compliance today.
+      </p>
+
+      <div class="pt-6 flex flex-wrap justify-center gap-4">
+        <a href="login.html" class="btn-cyan text-sm px-8 py-3">
+          Request Security Assessment
+        </a>
+        <a href="command-center.html" class="btn-outline text-sm px-8 py-3">
+          Explore Live Command Center
+        </a>
+      </div>
+
+      <div class="pt-8 font-mono text-xs text-slate-400 flex items-center justify-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+        <span>NO DISRUPTION TO ONGOING OPERATIONS // READY FOR DEPLOYMENT</span>
+      </div>
+    </div>
+  </section>
+
+    <!-- FOOTER -->
+  <footer class="border-t border-white/10 bg-[#040608] text-slate-400 pt-16 pb-12 font-sans mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-white/10">
+        <div class="lg:col-span-2 space-y-4">
+          <a href="index.html" class="flex items-center gap-2.5">
+            <img src="assets/images/logo.svg" alt="VANTA//SEC" class="w-7 h-7">
+            <span class="font-heading font-extrabold text-xl text-white">VANTA<span class="text-cyan-400">//</span>SEC</span>
+          </a>
+          <p class="text-slate-400 text-sm max-w-sm font-sans leading-relaxed">
+            "See the Threat. Secure the Future." Enterprise-grade adversarial simulation, CVE advisory, and compliance-ready security reporting.
+          </p>
+        </div>
+        <div>
+          <h4 class="font-mono text-xs text-white font-bold uppercase mb-4">Platform</h4>
+          <ul class="space-y-2 text-sm font-sans">
+            <li><a href="command-center.html" class="hover:text-cyan-400">Command Center</a></li>
+            <li><a href="threat-intelligence.html" class="hover:text-cyan-400">Threat Intelligence</a></li>
+            <li><a href="security-advisory.html" class="hover:text-cyan-400">Security Advisory</a></li>
+            <li><a href="login.html" class="hover:text-amber-400">Client Portal</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-mono text-xs text-white font-bold uppercase mb-4">Company</h4>
+          <ul class="space-y-2 text-sm font-sans">
+            <li><a href="about.html" class="hover:text-cyan-400">About Us</a></li>
+            <li><a href="about.html#contact" class="hover:text-cyan-400">Contact / Mission</a></li>
+            <li><a href="about.html#doctrine" class="hover:text-cyan-400">Defense Doctrine</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-mono text-xs text-white font-bold uppercase mb-4">Governance</h4>
+          <ul class="space-y-2 text-sm font-sans">
+            <li><a href="security-advisory.html" class="hover:text-cyan-400">Security Practices</a></li>
+            <li><a href="security-advisory.html#disclosure" class="hover:text-cyan-400">Responsible Disclosure</a></li>
+            <li><a href="security-advisory.html" class="hover:text-cyan-400">Privacy Policy</a></li>
+            <li><a href="security-advisory.html" class="hover:text-cyan-400">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs text-slate-400">
+        <div>© 2026 VANTA//SEC. All rights reserved.</div>
+        <div class="flex items-center gap-5">
+          <a href="#" class="text-slate-400 hover:text-cyan-400 transition-colors" aria-label="Twitter">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+          </a>
+          <a href="#" class="text-slate-400 hover:text-cyan-400 transition-colors" aria-label="LinkedIn">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a href="#" class="text-slate-400 hover:text-cyan-400 transition-colors" aria-label="GitHub">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- BACK TO TOP BUTTON -->
+  <button id="back-to-top" class="fixed bottom-6 right-6 z-40 p-3 rounded-full bg-cyan-950 border border-cyan-400 text-cyan-400 shadow-xl opacity-0 pointer-events-none transition-all duration-300 hover:scale-110" aria-label="Back to Top">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+    </svg>
+  </button>
+
+  <!-- Core Scripts -->
+  <script src="assets/js/soc-visuals.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.VANTA_SOC && window.VANTA_SOC.initHeroRadar) {
+        window.VANTA_SOC.initHeroRadar('hero-radar-canvas');
+      }
+    });
+  </script>
+</body>
+</html>
