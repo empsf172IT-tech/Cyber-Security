@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
   <meta charset="UTF-8">
@@ -37,20 +37,13 @@
 </head>
 <body class="bg-tech-grid min-h-screen text-slate-100 flex flex-col justify-between selection:bg-cyan-500 selection:text-black relative overflow-x-hidden">
 
-  <!-- TOP HEADER — Brand + Utility Controls -->
-  <div class="px-4 sm:px-8 py-4 flex justify-between items-center z-20 relative border-b border-white/5 bg-black/30 backdrop-blur-md">
-
-    <!-- Brand Logo & Name -->
-    <a href="index.html" class="flex items-center gap-3 group focus:outline-none">
-      <img src="assets/images/logo.svg" alt="VANTA//SEC" class="w-8 h-8 group-hover:scale-105 transition-transform">
-      <div class="flex flex-col">
-        <span class="font-heading font-extrabold text-xl tracking-wider text-white leading-none">
-          VANTA<span class="text-cyan-400">//</span>SEC
-        </span>
-        <span class="font-mono text-[9px] tracking-widest text-slate-400 uppercase">Command Center</span>
-      </div>
+  <!-- TOP UTILITY BAR — Controls only, no duplicate brand -->
+  <div class="px-4 sm:px-8 py-3 flex justify-between items-center z-20 relative">
+    <!-- Back to home (subtle) -->
+    <a href="index.html" class="flex items-center gap-1.5 text-slate-500 hover:text-cyan-400 transition-colors font-mono text-[11px]">
+      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+      HOME
     </a>
-
     <!-- Theme, Sound -->
     <div class="flex items-center gap-2">
       <button class="btn-sound-toggle p-2 rounded border border-cyan-500/20 hover:border-cyan-400 text-slate-400 hover:text-cyan-400 transition-colors" title="Tactical Audio Toggle"></button>
@@ -68,16 +61,16 @@
       
       <!-- Logo & Brand Mark -->
       <div class="text-center mb-8">
-        <!-- Logo + Name side-by-side -->
-        <div class="inline-flex items-center gap-3 mb-4">
-          <img src="assets/images/logo.svg" alt="VANTA//SEC" class="w-12 h-12 drop-shadow-[0_0_12px_rgba(0,240,255,0.5)]">
+        <!-- Logo + Name side-by-side — clickable back to home -->
+        <a href="index.html" class="inline-flex items-center gap-3 mb-4 group">
+          <img src="assets/images/logo.svg" alt="VANTA//SEC" class="w-12 h-12 drop-shadow-[0_0_12px_rgba(0,240,255,0.5)] group-hover:scale-105 transition-transform">
           <div class="flex flex-col items-start">
             <span class="font-heading font-extrabold text-2xl tracking-wider text-white leading-none">
               VANTA<span class="text-cyan-400">//</span>SEC
             </span>
             <span class="font-mono text-[9px] tracking-widest text-slate-400 uppercase mt-0.5">Command Center</span>
           </div>
-        </div>
+        </a>
         <!-- Divider -->
         <div class="flex items-center gap-3 mb-4">
           <div class="flex-1 h-px bg-gradient-to-r from-transparent to-cyan-500/40"></div>

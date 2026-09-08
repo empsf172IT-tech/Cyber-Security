@@ -80,11 +80,18 @@
         <a href="login.html" class="btn-cyan ml-1 text-xs py-2 px-4">Request Assessment</a>
       </div>
 
+
       <div class="lg:hidden flex items-center gap-2">
+        <button class="btn-theme-toggle p-2 rounded border border-white/10" aria-label="Toggle Theme">
+          <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+        </button>
         <button id="mobile-menu-btn" class="p-2.5 rounded border border-cyan-500/30 text-cyan-400">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
       </div>
+
     </div>
   </header>
 
@@ -214,35 +221,36 @@
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 font-mono text-xs">
         
-        <div class="vanta-panel technical-corner p-6 border border-white/10">
-          <div class="text-cyan-400 font-bold text-base mb-2">01 // ASSUME BREACH</div>
+        <div class="vanta-panel technical-corner p-6 border border-white/10 flex flex-col">
+          <div class="text-cyan-400 font-bold text-base mb-2 min-h-[52px] flex items-start">01 // ASSUME BREACH</div>
           <p class="text-slate-400 font-sans text-xs leading-relaxed">
             Perimeters will fail. We structure architecture so that an intrusion in a public worker node cannot access the core cryptographic vaults.
           </p>
         </div>
 
-        <div class="vanta-panel technical-corner p-6 border border-white/10">
-          <div class="text-cyan-400 font-bold text-base mb-2">02 // SUB-SECOND REACTION</div>
+        <div class="vanta-panel technical-corner p-6 border border-white/10 flex flex-col">
+          <div class="text-cyan-400 font-bold text-base mb-2 min-h-[52px] flex items-start">02 // SUB-SECOND REACTION</div>
           <p class="text-slate-400 font-sans text-xs leading-relaxed">
             Minutes are an eternity in cyber warfare. Containment must happen at machine speed, backed by pre-authorized autonomous playbooks.
           </p>
         </div>
 
-        <div class="vanta-panel technical-corner p-6 border border-white/10">
-          <div class="text-cyan-400 font-bold text-base mb-2">03 // PROVABLE METRICS</div>
+        <div class="vanta-panel technical-corner p-6 border border-white/10 flex flex-col">
+          <div class="text-cyan-400 font-bold text-base mb-2 min-h-[52px] flex items-start">03 // PROVABLE METRICS</div>
           <p class="text-slate-400 font-sans text-xs leading-relaxed">
             Security that cannot be continuously measured is an illusion. Every claim is validated against real red team adversary simulations.
           </p>
         </div>
 
-        <div class="vanta-panel technical-corner p-6 border border-white/10">
-          <div class="text-cyan-400 font-bold text-base mb-2">04 // HYBRID INTELLIGENCE</div>
+        <div class="vanta-panel technical-corner p-6 border border-white/10 flex flex-col">
+          <div class="text-cyan-400 font-bold text-base mb-2 min-h-[52px] flex items-start">04 // HYBRID INTELLIGENCE</div>
           <p class="text-slate-400 font-sans text-xs leading-relaxed">
             Autonomous algorithms handle high-volume event correlation; seasoned human operators command complex adversary eradication.
           </p>
         </div>
 
       </div>
+
 
     </div>
   </section>
@@ -256,30 +264,30 @@
     </div>
 
     <div class="grid grid-cols-2 md:grid-cols-5 gap-4 font-mono text-center text-xs">
-      <div class="vanta-panel p-4 technical-corner border border-cyan-500/30">
+      <div class="vanta-panel p-4 technical-corner border border-cyan-500/30 flex flex-col">
         <div class="text-white font-bold text-sm">ZURICH</div>
         <div class="text-[10px] text-slate-400 mt-1">Swiss Banking Core</div>
-        <div class="text-emerald-400 text-[10px] mt-2">● SOC-1 PRIMARY</div>
+        <div class="text-emerald-400 text-[10px] mt-auto pt-2">● SOC-1 PRIMARY</div>
       </div>
-      <div class="vanta-panel p-4 technical-corner border border-cyan-500/30">
+      <div class="vanta-panel p-4 technical-corner border border-cyan-500/30 flex flex-col">
         <div class="text-white font-bold text-sm">FRANKFURT</div>
         <div class="text-[10px] text-slate-400 mt-1">EU Cloud Gateway</div>
-        <div class="text-emerald-400 text-[10px] mt-2">● SOC-2 CONTINENTAL</div>
+        <div class="text-emerald-400 text-[10px] mt-auto pt-2">● SOC-2 CONTINENTAL</div>
       </div>
-      <div class="vanta-panel p-4 technical-corner border border-cyan-500/30">
+      <div class="vanta-panel p-4 technical-corner border border-cyan-500/30 flex flex-col">
         <div class="text-white font-bold text-sm">SINGAPORE</div>
         <div class="text-[10px] text-slate-400 mt-1">APAC Telemetry Hub</div>
-        <div class="text-emerald-400 text-[10px] mt-2">● SOC-3 PACIFIC</div>
+        <div class="text-emerald-400 text-[10px] mt-auto pt-2">● SOC-3 PACIFIC</div>
       </div>
-      <div class="vanta-panel p-4 technical-corner border border-cyan-500/30">
+      <div class="vanta-panel p-4 technical-corner border border-cyan-500/30 flex flex-col">
         <div class="text-white font-bold text-sm">N. VIRGINIA</div>
         <div class="text-[10px] text-slate-400 mt-1">Federal Cloud Corridor</div>
-        <div class="text-emerald-400 text-[10px] mt-2">● SOC-4 AMERICAS</div>
+        <div class="text-emerald-400 text-[10px] mt-auto pt-2">● SOC-4 AMERICAS</div>
       </div>
-      <div class="vanta-panel p-4 technical-corner border border-cyan-500/30">
+      <div class="vanta-panel p-4 technical-corner border border-cyan-500/30 flex flex-col">
         <div class="text-white font-bold text-sm">TOKYO</div>
         <div class="text-[10px] text-slate-400 mt-1">East Asia Perimeter</div>
-        <div class="text-emerald-400 text-[10px] mt-2">● SOC-5 EAST ASIA</div>
+        <div class="text-emerald-400 text-[10px] mt-auto pt-2">● SOC-5 EAST ASIA</div>
       </div>
     </div>
 
