@@ -251,7 +251,7 @@
         </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 font-mono text-xs">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 font-mono text-xs">
         
         <!-- Dossier 1 -->
         <div class="vanta-panel technical-corner p-6 border border-red-500/30 flex flex-col">
@@ -264,8 +264,8 @@
             Specializes in token theft, OAuth app consent abuse, and password spraying against executive mailboxes and cloud control planes.
           </p>
           <div class="p-3 rounded bg-black/40 border border-white/5 space-y-2 text-[11px]">
-            <div class="flex justify-between gap-2"><span class="text-slate-400 shrink-0">COMMON VECTORS:</span><span class="text-white text-right">Cloud API, MFA Fatigue</span></div>
-            <div class="flex justify-between gap-2"><span class="text-slate-400 shrink-0">DEFENSE RULE:</span><span class="text-cyan-400 text-right">VANTA-SIG-2901</span></div>
+            <div class="grid grid-cols-[105px_minmax(0,1fr)] gap-2"><span class="text-slate-400">COMMON VECTORS:</span><span class="text-white break-words">Cloud API, MFA Fatigue</span></div>
+            <div class="grid grid-cols-[105px_minmax(0,1fr)] gap-2"><span class="text-slate-400">DEFENSE RULE:</span><span class="text-cyan-400 break-words">VANTA-SIG-2901</span></div>
           </div>
         </div>
 
@@ -280,13 +280,13 @@
             Uses "Living off the Land" (LotL) binaries (PowerShell, WMI) and compromised SOHO routers to evade traditional signature-based detection.
           </p>
           <div class="p-3 rounded bg-black/40 border border-white/5 space-y-2 text-[11px]">
-            <div class="flex justify-between gap-2"><span class="text-slate-400 shrink-0">COMMON VECTORS:</span><span class="text-white text-right">SOHO Router Firmware, LotL</span></div>
-            <div class="flex justify-between gap-2"><span class="text-slate-400 shrink-0">DEFENSE RULE:</span><span class="text-cyan-400 text-right">VANTA-SIG-8842</span></div>
+            <div class="grid grid-cols-[105px_minmax(0,1fr)] gap-2"><span class="text-slate-400">COMMON VECTORS:</span><span class="text-white break-words">SOHO Router Firmware, LotL</span></div>
+            <div class="grid grid-cols-[105px_minmax(0,1fr)] gap-2"><span class="text-slate-400">DEFENSE RULE:</span><span class="text-cyan-400 break-words">VANTA-SIG-8842</span></div>
           </div>
         </div>
 
         <!-- Dossier 3 -->
-        <div class="vanta-panel technical-corner p-6 border border-violet-500/30 flex flex-col">
+        <div class="vanta-panel technical-corner p-6 border border-violet-500/30 flex flex-col md:col-span-2 lg:col-span-1 md:w-[calc(50%-12px)] md:mx-auto lg:w-auto lg:mx-0">
           <div class="flex justify-between items-start gap-2 min-h-[72px] mb-3">
             <span class="text-violet-400 font-bold text-sm leading-snug">LAZARUS VARIANT // HIDDEN COBRA</span>
             <span class="px-2 py-0.5 rounded bg-violet-950 text-violet-400 text-[10px] border border-violet-500/30 shrink-0 mt-0.5">ACTIVE</span>
@@ -296,8 +296,8 @@
             Rapid weaponization of social engineering through weaponized PDF job applications, Trojanized DeFi packages, and npm supply-chain injection.
           </p>
           <div class="p-3 rounded bg-black/40 border border-white/5 space-y-2 text-[11px]">
-            <div class="flex justify-between gap-2"><span class="text-slate-400 shrink-0">COMMON VECTORS:</span><span class="text-white text-right">Supply Chain, trojanized npm</span></div>
-            <div class="flex justify-between gap-2"><span class="text-slate-400 shrink-0">DEFENSE RULE:</span><span class="text-cyan-400 text-right">VANTA-SIG-3319</span></div>
+            <div class="grid grid-cols-[105px_minmax(0,1fr)] gap-2"><span class="text-slate-400">COMMON VECTORS:</span><span class="text-white break-words">Supply Chain, trojanized npm</span></div>
+            <div class="grid grid-cols-[105px_minmax(0,1fr)] gap-2"><span class="text-slate-400">DEFENSE RULE:</span><span class="text-cyan-400 break-words">VANTA-SIG-3319</span></div>
           </div>
         </div>
 
