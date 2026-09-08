@@ -89,7 +89,7 @@
       </nav>
 
       <!-- Right Actions: Sound, Theme, Assessment CTA -->
-      <div class="hidden sm:flex items-center gap-2.5">
+      <div class="hidden lg:flex items-center gap-2.5">
         <!-- Sound Effect Toggle -->
         <button class="btn-sound-toggle p-2 rounded border border-cyan-500/20 hover:border-cyan-400 text-slate-400 hover:text-cyan-400 transition-colors" title="Tactical Audio Toggle" aria-label="Tactical Audio Toggle">
           <!-- icon populated by main.js -->
@@ -111,11 +111,6 @@
 
       <!-- Mobile Hamburger Button -->
       <div class="lg:hidden flex items-center gap-2">
-        <button class="btn-theme-toggle p-2 rounded border border-white/10" aria-label="Toggle Theme">
-          <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-          </svg>
-        </button>
         <button id="mobile-menu-btn" class="p-2.5 rounded border border-cyan-500/30 text-cyan-400 hover:bg-cyan-500/10 focus:outline-none" aria-label="Open Mobile Menu">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
@@ -154,7 +149,11 @@
 
     <div class="pt-6 border-t border-white/10 space-y-4">
       <div class="flex items-center justify-between">
-        <span class="text-xs font-mono text-slate-400">ORIENTATION</span>
+        <span class="text-xs font-mono text-slate-400">PREFERENCES</span>
+        <div class="flex gap-2">
+          <button class="btn-sound-toggle p-2 rounded border border-white/10 text-slate-400 hover:text-cyan-400 transition-colors" title="Tactical Audio Toggle"></button>
+          <button class="btn-theme-toggle p-2 rounded border border-white/10 text-cyan-400 hover:text-cyan-300 transition-colors" aria-label="Toggle Theme"></button>
+        </div>
       </div>
       <a href="login.html" class="btn-cyan w-full text-xs text-center justify-center">
         Request Assessment
